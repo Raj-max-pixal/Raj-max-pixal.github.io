@@ -14,13 +14,13 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "multimax-ai-hub",
-    name: "Multimax AI Hub",
+    id: "ai-content-platform",
+    name: "AI Content Platform",
     category: "AI Platform",
     description:
-      "Production AI content platform serving real users — the flagship product of Multimax.",
+      "A production-grade AI content platform serving real users — designed, built, and shipped from scratch.",
     longDescription:
-      "The core product of Multimax startup. A production-grade AI content platform designed, built, and shipped from scratch. Handles concurrent user requests through a distributed backend on Firebase and Google Cloud Platform with real-time data sync, focusing on reliability and performance at scale.",
+      "A production-grade AI content platform designed and built from scratch. Handles concurrent user requests through a distributed backend on Firebase and Google Cloud Platform with real-time data sync, focusing on reliability and performance at scale. Engineered for real user load with CI/CD pipelines for continuous delivery.",
     techStack: ["Next.js", "TypeScript", "Firebase", "GCP", "AI/LLM", "CI/CD"],
     githubUrl: "https://github.com/Raj-max-pixal",
     liveUrl: null,
@@ -30,11 +30,11 @@ export const projects: Project[] = [
   {
     id: "maxie",
     name: "MAXie",
-    category: "AI Companion / Desktop Pet",
+    category: "AI Companion / Desktop App",
     description:
       "An intelligent desktop companion — an AI-powered pet that lives on your screen and responds to you.",
     longDescription:
-      "MAXie is an AI-powered desktop companion experience combining personality-driven LLM responses with a delightful visual presence. Built as part of the Multimax product family, MAXie blurs the line between productivity tool and interactive companion.",
+      "MAXie is an AI-powered desktop companion experience combining personality-driven LLM responses with a delightful visual presence. Blurs the line between productivity tool and interactive companion — built with Python, prompt engineering, and desktop app frameworks.",
     techStack: ["Python", "LLM APIs", "Prompt Engineering", "Desktop App", "AI Agent Design"],
     githubUrl: "https://github.com/Raj-max-pixal",
     liveUrl: null,
@@ -70,13 +70,13 @@ export const projects: Project[] = [
     accentColor: "#22c55e",
   },
   {
-    id: "multimax-growth-studio",
-    name: "Multimax AI Growth Studio",
+    id: "growth-intelligence-studio",
+    name: "Growth Intelligence Studio",
     category: "AI / Web",
     description:
       "An AI-powered growth platform helping creators and brands scale content, reach, and engagement.",
     longDescription:
-      "Multimax AI Growth Studio is a web platform built to help creators and brands scale smarter. It uses AI to automate content strategy, optimize posting schedules, analyze engagement patterns, and generate platform-specific content — all from a single dashboard.",
+      "Growth Intelligence Studio is a web platform built to help creators and brands scale smarter. It uses AI to automate content strategy, optimize posting schedules, analyze engagement patterns, and generate platform-specific content — all from a single dashboard.",
     techStack: ["Next.js", "React", "Node.js", "Firebase", "AI/LLM", "TypeScript"],
     githubUrl: "https://github.com/Raj-max-pixal",
     liveUrl: null,

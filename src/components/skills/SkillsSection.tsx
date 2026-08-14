@@ -1,27 +1,43 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { skillCategories, type Skill } from "@/data/skills";
-import { projects } from "@/data/projects";
+import { skillCategories } from "@/data/skills";
+import { TechIconCard } from "./TechIconCard";
+
+const CATEGORIES = [
+  { id: "all", label: "All" },
+  { id: "frontend", label: "Frontend" },
+  { id: "backend", label: "Backend" },
+  { id: "mobile", label: "Mobile" },
+  { id: "ai", label: "AI / ML" },
+  { id: "cloud", label: "Cloud" },
+  { id: "cloudsecops", label: "CloudSecOps" },
+  { id: "tools", label: "Tools" },
+];
 
 export function SkillsSection() {
   const ref = useRef<HTMLElement>(null);
-  const [activeTab, setActiveTab] = useState("languages");
-  const [hovered, setHovered] = useState<Skill | null>(null);
+  const [activeTab, setActiveTab] = useState("all");
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
-    const els = ref.current?.querySelectorAll<HTMLElement>(".reveal");
-    if (!els) return;
+    const el = ref.current;
+    if (!el) return;
     const io = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("in-view"); }),
+      ([e]) => { if (e.isIntersecting) setInView(true); },
       { threshold: 0.08 }
     );
-    els.forEach(el => io.observe(el));
+    io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  const current = skillCategories.find(c => c.id === activeTab);
-  const related = hovered?.relatedProjects?.map(id => projects.find(p => p.id === id)).filter(Boolean) ?? [];
+  const allSkills = skillCategories.flatMap(cat =>
+    cat.skills.map(s => ({ ...s, categoryId: cat.id }))
+  );
+
+  const filtered = activeTab === "all"
+    ? allSkills
+    : allSkills.filter(s => s.categoryId === activeTab);
 
   return (
     <section
@@ -44,29 +60,30 @@ export function SkillsSection() {
       }} />
 
       <div className="container">
-        <span className="section-label reveal" style={{ marginBottom: "1.5rem", display: "block" }}>Technology</span>
-        <h2 className="t-display reveal" style={{ marginBottom: "1rem", transitionDelay: "0.08s" }}>Skills</h2>
-        <p className="t-body reveal" style={{ color: "var(--text-secondary)", maxWidth: "480px", marginBottom: "3rem", transitionDelay: "0.16s" }}>
-          Hover a technology to see which projects use it.
+        <span className="section-label" style={{ marginBottom: "1.5rem", display: "block" }}>Technology</span>
+        <h2 className="t-display" style={{ marginBottom: "0.75rem" }}>Tech Stack</h2>
+        <p className="t-body" style={{ color: "var(--text-secondary)", maxWidth: "520px", marginBottom: "0.5rem" }}>
+          Tools &amp; Technologies
+        </p>
+        <p className="t-small" style={{ color: "var(--text-tertiary)", maxWidth: "520px", marginBottom: "3rem" }}>
+          The technologies powering my projects — from AI &amp; full-stack to cloud, security &amp; DevOps.
         </p>
 
-        {/* Tabs */}
+        {/* Category tabs */}
         <div
-          className="reveal"
           role="tablist"
           aria-label="Skill categories"
-          style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "2.5rem", transitionDelay: "0.24s" }}
+          style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "2.5rem" }}
         >
-          {skillCategories.map(cat => (
+          {CATEGORIES.map(cat => (
             <button
               key={cat.id}
               id={`tab-${cat.id}`}
               role="tab"
               aria-selected={activeTab === cat.id}
-              aria-controls={`panel-${cat.id}`}
-              onClick={() => { setActiveTab(cat.id); setHovered(null); }}
+              onClick={() => setActiveTab(cat.id)}
               style={{
-                padding: "0.4rem 1rem",
+                padding: "0.4rem 1.1rem",
                 borderRadius: "var(--r-full)",
                 fontSize: "0.78rem",
                 fontWeight: 500,
@@ -83,89 +100,62 @@ export function SkillsSection() {
           ))}
         </div>
 
-        {/* Skills grid */}
+        {/* Icon grid */}
         <div
-          id={`panel-${activeTab}`}
-          role="tabpanel"
-          aria-labelledby={`tab-${activeTab}`}
-          className="reveal"
-          style={{ transitionDelay: "0.32s" }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
+            gap: "0.75rem",
+          }}
         >
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem", marginBottom: "2rem" }}>
-            {current?.skills.map(skill => (
-              <button
-                key={skill.name}
-                id={`skill-${skill.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}
-                className="skill-pill"
-                onMouseEnter={() => setHovered(skill)}
-                onMouseLeave={() => setHovered(null)}
-                style={{
-                  borderColor: hovered?.name === skill.name ? "var(--accent)" : "var(--border)",
-                  background: hovered?.name === skill.name ? "var(--accent-dim)" : "var(--bg-surface)",
-                  color: hovered?.name === skill.name ? "var(--text-primary)" : "var(--text-secondary)",
-                }}
-                aria-label={skill.name}
-              >
-                {skill.name}
-                {skill.relatedProjects && skill.relatedProjects.length > 0 && (
-                  <span style={{
-                    width: 16, height: 16,
-                    borderRadius: "50%",
-                    background: "var(--accent-dim)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "0.6rem",
-                    color: "var(--accent)",
-                    fontWeight: 700,
-                  }}>
-                    {skill.relatedProjects.length}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
+          {filtered.map((skill, i) => (
+            <div
+              key={`${skill.name}-${i}`}
+              style={{
+                opacity: inView ? 1 : 0,
+                transform: inView ? "none" : "translateY(16px)",
+                transition: `opacity 0.5s var(--ease-expo) ${Math.min(i * 0.04, 0.5)}s, transform 0.5s var(--ease-expo) ${Math.min(i * 0.04, 0.5)}s`,
+              }}
+            >
+              <TechIconCard name={skill.name} icon={skill.icon} />
+            </div>
+          ))}
+        </div>
 
-          {/* Related projects tooltip */}
+        {/* CloudSecOps note */}
+        {(activeTab === "cloudsecops" || activeTab === "all") && (
           <div
-            aria-live="polite"
             style={{
-              minHeight: "76px",
-              padding: "1.1rem 1.4rem",
+              marginTop: "2.5rem",
+              padding: "1.2rem 1.5rem",
               background: "var(--bg-surface)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--r-md)",
-              opacity: hovered ? 1 : 0,
-              transform: hovered ? "translateY(0)" : "translateY(6px)",
-              transition: "opacity 0.2s, transform 0.2s",
-              pointerEvents: "none",
+              border: "1px solid rgba(59,126,255,0.15)",
+              borderRadius: "var(--r-lg)",
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "1rem",
             }}
           >
-            {hovered && (
-              <>
-                <p className="t-label" style={{ color: "var(--text-tertiary)", marginBottom: "0.6rem" }}>
-                  {related.length ? `Used in ${related.length} project${related.length > 1 ? "s" : ""}` : "Core skill"}
-                </p>
-                <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
-                  {related.length > 0 ? related.map(p => p && (
-                    <span key={p.id} style={{
-                      padding: "0.25rem 0.7rem",
-                      borderRadius: "var(--r-full)",
-                      border: `1px solid ${p.accentColor}40`,
-                      background: `${p.accentColor}0f`,
-                      fontSize: "0.775rem",
-                      color: p.accentColor,
-                    }}>
-                      {p.name}
-                    </span>
-                  )) : (
-                    <span className="t-small" style={{ color: "var(--text-tertiary)" }}>Used across all projects</span>
-                  )}
-                </div>
-              </>
-            )}
+            <div
+              style={{
+                width: "8px", height: "8px",
+                borderRadius: "50%",
+                background: "var(--accent)",
+                boxShadow: "0 0 10px var(--accent)",
+                flexShrink: 0,
+                marginTop: "0.35rem",
+              }}
+            />
+            <div>
+              <p style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.25rem" }}>
+                CloudSecOps — Actively Exploring
+              </p>
+              <p className="t-small" style={{ color: "var(--text-secondary)" }}>
+                Exploring secure cloud-native development: Docker, CI/CD, GCP, Firebase security, and DevSecOps practices. An area I&apos;m actively developing alongside my AI and full-stack work.
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

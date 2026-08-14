@@ -1,15 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
-const JOURNEY = [
-  { year: "2007",    label: "First Code",          desc: "Curiosity sparked a lifelong obsession with building." },
-  { year: "2021",    label: "Self-taught Engineer", desc: "3+ years of Python, Java, JavaScript — built a real engineering foundation." },
-  { year: "2023",    label: "Founded Multimax",     desc: "Shipped production AI applications to real users. Startup founder." },
-  { year: "2024",    label: "B.Tech IT",            desc: "Arunachala College — CGPA 8.83. Deepened CS fundamentals and systems thinking." },
-  { year: "2026",    label: "Microsoft Hackathon",  desc: "CareerForge AI — 85% accuracy, sub-200ms latency. Published IoT research. Google Ambassador." },
-  { year: "→",       label: "What's Next",          desc: "Building intelligent products that go beyond the expected." },
-];
+import { AboutPortrait } from "./AboutPortrait";
+import { InteractiveParticleField } from "@/components/ui/InteractiveParticleField";
 
 export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -33,15 +26,16 @@ export function AboutSection() {
       className="section-pad"
       style={{ position: "relative", overflow: "hidden" }}
     >
-      {/* Background accent */}
+      <InteractiveParticleField particleCount={60} style={{ opacity: 0.4 }} />
+
       <div aria-hidden="true" style={{
         position: "absolute", right: "-15%", top: "5%",
-        width: "550px", height: "550px", borderRadius: "50%",
+        width: "600px", height: "600px", borderRadius: "50%",
         background: "radial-gradient(circle, rgba(59,126,255,0.04) 0%, transparent 70%)",
         pointerEvents: "none",
       }} />
 
-      <div className="container">
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <span className="section-label reveal" style={{ marginBottom: "2rem", display: "block" }}>About</span>
 
         <h2 className="t-display reveal" style={{ marginBottom: "3.5rem", transitionDelay: "0.08s" }}>
@@ -50,89 +44,111 @@ export function AboutSection() {
           <span style={{ color: "var(--text-secondary)" }}>the obvious.</span>
         </h2>
 
-        {/* Two-column bio */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "clamp(2rem, 5vw, 4.5rem)",
-          marginBottom: "5rem",
-        }} className="about-grid">
-          <div className="reveal" style={{ transitionDelay: "0.15s" }}>
-            <p className="t-body-lg" style={{ color: "var(--text-secondary)", marginBottom: "1.25rem" }}>
-              I&apos;m <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Rajasaranya.T</strong> — software engineer, AI builder, and founder from Chennai, Tamil Nadu. I study Information Technology at Arunachala College of Engineering for Women (CGPA 8.83).
-            </p>
-            <p className="t-body-lg" style={{ color: "var(--text-secondary)" }}>
-              I founded <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Multimax</strong> — shipping production AI applications used by real users. I operate at the intersection of full-stack engineering, LLM integration, and cloud infrastructure.
-            </p>
-          </div>
-
-          <div className="reveal" style={{ transitionDelay: "0.25s" }}>
-            <p className="t-body-lg" style={{ color: "var(--text-secondary)", marginBottom: "1.25rem" }}>
-              Competed at <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Microsoft Hackathon 2026</strong>, published peer-reviewed IoT research in IJFMR, earned Google Cloud certifications, and mentored 20+ junior engineers on full-stack architecture.
-            </p>
-            <p className="t-body-lg" style={{ color: "var(--text-secondary)" }}>
-              I also produce 150+ technical videos explaining AI, ML, and cloud engineering — making complex systems accessible to the next generation of builders.
-            </p>
-          </div>
-        </div>
-
-        {/* Journey timeline */}
-        <div className="reveal" style={{ transitionDelay: "0.35s" }}>
-          <p className="t-label" style={{ color: "var(--text-tertiary)", marginBottom: "2.5rem" }}>Journey</p>
-
-          <div style={{
+        {/* Two-column */}
+        <div
+          style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))",
-            position: "relative",
-            gap: "0 0.5rem",
-          }}>
-            {/* Connector */}
-            <div aria-hidden="true" style={{
-              position: "absolute",
-              top: "4px",
-              left: 0, right: 0,
-              height: "1px",
-              background: "var(--border)",
-              zIndex: 0,
-            }} />
+            gridTemplateColumns: "1fr 1fr",
+            gap: "clamp(2rem, 5vw, 5rem)",
+            alignItems: "center",
+          }}
+          className="about-main-grid"
+        >
+          {/* Left: Bio */}
+          <div>
+            <div className="reveal" style={{ transitionDelay: "0.15s" }}>
+              <p className="t-body-lg" style={{ color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
+                I&apos;m <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>Rajasaranya.T</strong> — a software engineer, AI builder, and full-stack developer from Chennai, Tamil Nadu. I study Information Technology at Arunachala College of Engineering for Women (CGPA 8.83).
+              </p>
+              <p className="t-body-lg" style={{ color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
+                I build production-grade software — from AI platforms and voice interfaces to mobile apps and developer tools. I operate at the intersection of <strong style={{ color: "var(--text-primary)", fontWeight: 600 }}>full-stack engineering</strong>, LLM integration, and cloud infrastructure.
+              </p>
+              <p className="t-body-lg" style={{ color: "var(--text-secondary)" }}>
+                Beyond building, I&apos;m actively exploring <strong style={{ color: "#06b6d4", fontWeight: 600 }}>CloudSecOps</strong> — combining cloud-native development, cybersecurity fundamentals, and DevOps practices to build more secure and resilient software systems.
+              </p>
+            </div>
 
-            {JOURNEY.map((item, i) => (
-              <div
-                key={item.year}
-                style={{
-                  paddingBottom: "2rem",
-                  paddingRight: "1rem",
-                  position: "relative",
-                  zIndex: 1,
-                }}
-              >
-                {/* Dot */}
-                <div style={{
-                  width: 9, height: 9,
-                  borderRadius: "50%",
-                  background: i === JOURNEY.length - 1 ? "var(--accent)" : "var(--bg-elevated)",
-                  border: `1.5px solid ${i === JOURNEY.length - 1 ? "var(--accent)" : "var(--border-strong)"}`,
-                  marginBottom: "1rem",
-                }} />
-
-                <p style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", color: "var(--accent)", marginBottom: "0.35rem" }}>
-                  {item.year}
-                </p>
-                <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.3rem", lineHeight: 1.3 }}>
-                  {item.label}
-                </p>
-                <p style={{ fontSize: "0.78rem", color: "var(--text-tertiary)", lineHeight: 1.55 }}>
-                  {item.desc}
-                </p>
+            {/* Interest tags */}
+            <div className="reveal" style={{ marginTop: "2rem", transitionDelay: "0.22s" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
+                {[
+                  { label: "AI Builder", color: "#a855f7" },
+                  { label: "Full-Stack", color: "#3b7eff" },
+                  { label: "Cloud", color: "#22c55e" },
+                  { label: "Cybersecurity", color: "#ef4444" },
+                  { label: "DevOps", color: "#f59e0b" },
+                  { label: "CloudSecOps", color: "#06b6d4" },
+                ].map(tag => (
+                  <span
+                    key={tag.label}
+                    style={{
+                      padding: "0.25rem 0.75rem",
+                      borderRadius: "var(--r-full)",
+                      border: `1px solid ${tag.color}30`,
+                      background: `${tag.color}0d`,
+                      fontSize: "0.72rem",
+                      color: tag.color,
+                      fontWeight: 500,
+                      letterSpacing: "0.03em",
+                    }}
+                  >
+                    {tag.label}
+                  </span>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Quick stats */}
+            <div
+              className="reveal"
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "1rem",
+                marginTop: "2rem",
+                transitionDelay: "0.28s",
+              }}
+            >
+              {[
+                { value: "8.83", label: "CGPA" },
+                { value: "10+", label: "Hackathons" },
+                { value: "30+", label: "Projects" },
+              ].map(stat => (
+                <div
+                  key={stat.label}
+                  style={{
+                    padding: "0.9rem 1.3rem",
+                    background: "var(--bg-surface)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "var(--r-lg)",
+                    textAlign: "center",
+                    minWidth: "80px",
+                  }}
+                >
+                  <p style={{ fontSize: "1.5rem", fontWeight: 800, letterSpacing: "-0.04em", color: "var(--text-primary)", lineHeight: 1 }}>
+                    {stat.value}
+                  </p>
+                  <p className="t-label" style={{ color: "var(--text-tertiary)", marginTop: "0.3rem" }}>
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Portrait + floating badges */}
+          <div className="reveal" style={{ transitionDelay: "0.3s" }}>
+            <AboutPortrait />
           </div>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .about-grid { grid-template-columns: 1fr !important; }
+        @media (max-width: 900px) {
+          .about-main-grid {
+            grid-template-columns: 1fr !important;
+            gap: 3rem !important;
+          }
         }
       `}</style>
     </section>

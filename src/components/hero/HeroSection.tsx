@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { HeroVideo } from "./HeroVideo";
+import { TechMarquee } from "@/components/ui/TechMarquee";
 import { ChevronDown } from "lucide-react";
 
 export function HeroSection() {
@@ -97,7 +98,7 @@ export function HeroSection() {
           padding: "clamp(5rem,10vw,7rem) clamp(1.25rem,4vw,3.5rem) 4rem",
           display: "flex",
           flexDirection: "column",
-          gap: "1.5rem",
+          gap: "1.25rem",
           willChange: "transform",
           transition: "transform 0.8s var(--ease-expo)",
         }}
@@ -153,7 +154,21 @@ export function HeroSection() {
           Software Engineer
           <span style={{ color: "var(--accent)", fontSize: "0.5em" }}>●</span>
           AI Builder
+          <span style={{ color: "var(--accent)", fontSize: "0.5em" }}>●</span>
+          Full-Stack Developer
         </p>
+
+        {/* Running marquee text */}
+        <div
+          style={{
+            opacity: visible ? 1 : 0,
+            transition: "opacity 1s ease",
+            transitionDelay: "0.5s",
+            marginTop: "0.25rem",
+          }}
+        >
+          <TechMarquee speed={32} />
+        </div>
 
         {/* Copy */}
         <p
@@ -164,7 +179,7 @@ export function HeroSection() {
             opacity: visible ? 1 : 0,
             transform: visible ? "none" : "translateY(14px)",
             transition: "opacity 0.9s ease, transform 0.9s ease",
-            transitionDelay: "0.55s",
+            transitionDelay: "0.62s",
           }}
         >
           Building intelligent products, immersive experiences,
@@ -180,7 +195,7 @@ export function HeroSection() {
             opacity: visible ? 1 : 0,
             transform: visible ? "none" : "translateY(12px)",
             transition: "opacity 0.9s ease, transform 0.9s ease",
-            transitionDelay: "0.72s",
+            transitionDelay: "0.78s",
           }}
         >
           <button
