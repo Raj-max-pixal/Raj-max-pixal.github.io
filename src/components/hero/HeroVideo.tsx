@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface HeroVideoProps {
@@ -10,25 +10,34 @@ interface HeroVideoProps {
 export function HeroVideo({ visible }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const reducedMotion = useReducedMotion();
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     
+    // Load the video first
+    v.load();
+    
     // Auto-play video as soon as possible
     const playVideo = async () => {
       try {
         await v.play();
-      } catch {
-        console.log("Autoplay blocked, will play on interaction");
+        console.log("Video playing successfully");
+      } catch (err) {
+        console.log("Autoplay blocked:", err);
       }
     };
     
-    // Try to play immediately, then retry after a short delay
+    // Try to play immediately, then retry after delays
     playVideo();
-    const retryTimer = setTimeout(playVideo, 500);
+    const retry1 = setTimeout(playVideo, 300);
+    const retry2 = setTimeout(playVideo, 1000);
     
-    return () => clearTimeout(retryTimer);
+    return () => {
+      clearTimeout(retry1);
+      clearTimeout(retry2);
+    };
   }, [reducedMotion]);
 
   return (
@@ -81,6 +90,13 @@ export function HeroVideo({ visible }: HeroVideoProps) {
         loop
         playsInline
         preload="auto"
+        onLoadedData={() => {
+          setVideoLoaded(true);
+          console.log("Video loaded");
+        }}
+        onError={(e) => {
+          console.error("Video error:", e);
+        }}
         style={{
           width: "100%",
           height: "100%",
@@ -90,8 +106,8 @@ export function HeroVideo({ visible }: HeroVideoProps) {
           position: "relative",
           zIndex: 1,
           mixBlendMode: "screen",
-          opacity: visible ? 1 : 0,
-          transform: visible ? "scale(1)" : "scale(0.98)",
+          opacity: visible && videoLoaded ? 1 : 0,
+          transform: visible && videoLoaded ? "scale(1)" : "scale(0.98)",
           transition: "opacity 1.4s ease, transform 1.4s var(--ease-expo)",
           transitionDelay: "0.4s",
           willChange: "opacity, transform",
@@ -99,6 +115,20 @@ export function HeroVideo({ visible }: HeroVideoProps) {
       >
         <source src="/hero-video.mp4" type="video/mp4" />
       </video>
+
+      {/* Fallback gradient if video doesn't load */}
+      {!videoLoaded && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "radial-gradient(ellipse at center, rgba(59,126,255,0.15) 0%, transparent 70%)",
+            zIndex: 0,
+            opacity: visible ? 1 : 0,
+            transition: "opacity 1s ease",
+          }}
+        />
+      )}
     </div>
   );
 }

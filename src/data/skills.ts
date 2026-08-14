@@ -93,6 +93,33 @@ export const skillCategories: SkillCategory[] = [
       { name: "VS Code", icon: "vscode" },
       { name: "Figma", icon: "figma" },
       { name: "MySQL", icon: "mysql" },
+      { name: "PostgreSQL", icon: "postgresql" },
+      { name: "MongoDB", icon: "mongodb" },
+      { name: "Redis", icon: "redis" },
+    ],
+  },
+  {
+    id: "cloudservices",
+    label: "Cloud Services",
+    skills: [
+      { name: "AWS", icon: "aws" },
+      { name: "Azure", icon: "azure" },
+      { name: "Google Cloud", icon: "gcp" },
+      { name: "Firebase", icon: "firebase" },
+    ],
+  },
+  {
+    id: "languages",
+    label: "Languages",
+    skills: [
+      { name: "Python", icon: "python" },
+      { name: "JavaScript", icon: "javascript" },
+      { name: "TypeScript", icon: "typescript" },
+      { name: "Java", icon: "java" },
+      { name: "Go", icon: "go" },
+      { name: "Rust", icon: "rust" },
+      { name: "Kotlin", icon: "kotlin" },
+      { name: "Dart", icon: "dart" },
     ],
   },
 ];

@@ -13,6 +13,8 @@ const CATEGORIES = [
   { id: "cloud", label: "Cloud" },
   { id: "cloudsecops", label: "CloudSecOps" },
   { id: "tools", label: "Tools" },
+  { id: "cloudservices", label: "Cloud Services" },
+  { id: "languages", label: "Languages" },
 ];
 
 export function SkillsSection() {
