@@ -18,7 +18,6 @@ export function CustomCursor() {
     let mx = -100, my = -100;
     let rx = -100, ry = -100;
     let frameId: number;
-    let isHover = false;
 
     const onMove = (e: MouseEvent) => {
       mx = e.clientX;
@@ -37,13 +36,11 @@ export function CustomCursor() {
     frameId = requestAnimationFrame(tick);
 
     const onEnter = () => {
-      isHover = true;
       ring.style.width = "52px";
       ring.style.height = "52px";
       ring.style.borderColor = "rgba(59,126,255,0.55)";
     };
     const onLeave = () => {
-      isHover = false;
       ring.style.width = "32px";
       ring.style.height = "32px";
       ring.style.borderColor = "rgba(255,255,255,0.45)";

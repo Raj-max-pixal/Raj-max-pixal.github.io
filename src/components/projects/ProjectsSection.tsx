@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { projects } from "@/data/projects";
 import { ProjectPanel } from "./ProjectPanel";
+import { ProjectNetwork } from "./ProjectNetwork";
 
 export function ProjectsSection() {
   const ref = useRef<HTMLElement>(null);
@@ -20,8 +21,11 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" ref={ref} aria-label="Projects" style={{ position: "relative" }}>
+      {/* Background network effect */}
+      <ProjectNetwork />
+
       {/* Header */}
-      <div style={{ padding: "clamp(5rem,11vw,9rem) clamp(1.25rem,4vw,3.5rem) 0" }}>
+      <div style={{ padding: "clamp(5rem,11vw,9rem) clamp(1.25rem,4vw,3.5rem) 0", position: "relative", zIndex: 1 }}>
         <div className="container-wide">
           <span className="section-label reveal" style={{ marginBottom: "1.5rem", display: "block" }}>
             Selected Work
@@ -36,7 +40,7 @@ export function ProjectsSection() {
       </div>
 
       {/* Divider */}
-      <div className="divider" />
+      <div className="divider" style={{ position: "relative", zIndex: 1 }} />
 
       {/* Project panels */}
       {projects.map((project, i) => (

@@ -115,14 +115,15 @@ export function CertificationsSection() {
               style={{
                 position: "relative",
                 background: "var(--bg-surface)",
-                border: `1px solid ${hovered === cert.id ? cert.categoryColor + "40" : "var(--border)"}`,
+                border: `1px solid ${hovered === cert.id ? cert.categoryColor + "60" : "var(--border)"}`,
                 borderRadius: "var(--r-xl)",
                 padding: "1.5rem",
-                transition: "all 0.35s var(--ease-expo)",
-                transform: hovered === cert.id ? "translateY(-5px) scale(1.01)" : "none",
-                boxShadow: hovered === cert.id ? `0 16px 48px rgba(0,0,0,0.3), 0 0 0 1px ${cert.categoryColor}20` : "none",
+                transition: "all 0.4s var(--ease-spring)",
+                transform: inView ? (hovered === cert.id ? "translateY(-8px) scale(1.02)" : "none") : "translateY(30px) scale(0.95)",
+                filter: inView ? "blur(0px)" : "blur(6px)",
+                boxShadow: hovered === cert.id ? `0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px ${cert.categoryColor}30, 0 0 30px ${cert.categoryColor}15` : "none",
                 opacity: inView ? 1 : 0,
-                transitionDelay: `${Math.min(i * 0.08, 0.4)}s`,
+                transitionDelay: `${Math.min(i * 0.1, 0.5)}s`,
                 willChange: "transform",
               }}
             >
@@ -156,8 +157,9 @@ export function CertificationsSection() {
                     filter: hovered === cert.id ? `drop-shadow(0 0 6px ${cert.categoryColor}60)` : "none",
                     transition: "filter 0.3s ease",
                   }}
-                  dangerouslySetInnerHTML={{ __html: cert.icon }}
-                />
+                >
+                  <div dangerouslySetInnerHTML={{ __html: cert.icon }} />
+                </div>
               </div>
 
               {/* Issuer */}

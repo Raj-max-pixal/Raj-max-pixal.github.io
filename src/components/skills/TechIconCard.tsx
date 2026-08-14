@@ -184,9 +184,10 @@ export function TechIconCard({ name, icon }: TechIconCardProps) {
             ? `drop-shadow(0 0 6px ${iconData?.color ?? "#3b7eff"}80)`
             : "none",
         }}
-        dangerouslySetInnerHTML={iconData ? { __html: iconData.svg } : undefined}
       >
-        {!iconData && (
+        {iconData ? (
+          <div dangerouslySetInnerHTML={{ __html: iconData.svg }} />
+        ) : (
           <span style={{ fontSize: "1.1rem", fontWeight: 800, color: "#3b7eff" }}>
             {name.charAt(0)}
           </span>

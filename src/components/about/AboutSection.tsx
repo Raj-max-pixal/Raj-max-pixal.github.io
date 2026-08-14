@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { AboutPortrait } from "./AboutPortrait";
 import { InteractiveParticleField } from "@/components/ui/InteractiveParticleField";
+import { NetworkParticles } from "@/components/ui/NetworkParticles";
 
 export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,6 +28,7 @@ export function AboutSection() {
       style={{ position: "relative", overflow: "hidden" }}
     >
       <InteractiveParticleField particleCount={60} style={{ opacity: 0.4 }} />
+      <NetworkParticles particleCount={100} connectionDistance={130} style={{ opacity: 0.5 }} />
 
       <div aria-hidden="true" style={{
         position: "absolute", right: "-15%", top: "5%",

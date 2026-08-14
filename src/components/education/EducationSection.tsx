@@ -91,8 +91,9 @@ export function EducationSection() {
                   display: "flex",
                   gap: "2rem",
                   opacity: inViewItems[edu.level] ? 1 : 0,
-                  transform: inViewItems[edu.level] ? "none" : "translateY(20px)",
-                  transition: `opacity 0.7s var(--ease-expo) ${i * 0.15}s, transform 0.7s var(--ease-expo) ${i * 0.15}s`,
+                  transform: inViewItems[edu.level] ? "none" : i === 0 ? "translateX(-40px) scale(0.96)" : "translateX(40px) scale(0.96)",
+                  filter: inViewItems[edu.level] ? "blur(0px)" : "blur(6px)",
+                  transition: `opacity 0.85s var(--ease-expo) ${i * 0.2}s, transform 0.85s var(--ease-expo) ${i * 0.2}s, filter 0.85s ease ${i * 0.2}s`,
                 }}
               >
                 {/* Timeline node */}
@@ -111,8 +112,9 @@ export function EducationSection() {
                   >
                     <div
                       style={{ width: "18px", height: "18px" }}
-                      dangerouslySetInnerHTML={{ __html: edu.icon }}
-                    />
+                    >
+                      <div dangerouslySetInnerHTML={{ __html: edu.icon }} />
+                    </div>
                   </div>
                 </div>
 

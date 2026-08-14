@@ -229,6 +229,70 @@ body {
   flex-shrink: 0;
 }
 
+/* ─── Marquee Animations ───────────────────────────────────────────── */
+.marquee-outer {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.marquee-outer::before,
+.marquee-outer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee-outer::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-base), transparent);
+}
+
+.marquee-outer::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-base), transparent);
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 35s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.33%);
+  }
+}
+
+/* ─── Floating Keyframes ────────────────────────────────────────────── */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0) rotate(var(--badge-rotate, 0deg));
+  }
+  50% {
+    transform: translateY(-12px) rotate(calc(var(--badge-rotate, 0deg) + 2deg));
+  }
+}
+
+@keyframes float-gentle-r {
+  0%, 100% {
+    transform: translateY(0) rotate(var(--badge-rotate, 0deg));
+  }
+  50% {
+    transform: translateY(12px) rotate(calc(var(--badge-rotate, 0deg) - 2deg));
+  }
+}
+
 /* ─── Noise overlay ─────────────────────────────────────────────── */
 .noise-overlay {
   position: fixed;

@@ -23,7 +23,7 @@ export function ProjectPanel({ project, index }: ProjectPanelProps) {
     if (!el) return;
     const io = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setInView(true); },
-      { threshold: 0.08, rootMargin: "0px 0px -60px 0px" }
+      { threshold: 0.08, rootMargin: "0px 0px -100px 0px" }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -77,8 +77,10 @@ export function ProjectPanel({ project, index }: ProjectPanelProps) {
             style={{
               order: isEven ? 0 : 1,
               opacity: inView ? 1 : 0,
-              transform: inView ? "none" : `translateX(${isEven ? "-24px" : "24px"})`,
-              transition: `opacity 0.85s var(--ease-expo), transform 0.85s var(--ease-expo)`,
+              transform: inView ? "none" : `translateX(${isEven ? "-40px" : "40px"}) scale(0.96)`,
+              filter: inView ? "blur(0px)" : "blur(8px)",
+              transition: `opacity 0.9s var(--ease-expo), transform 0.9s var(--ease-expo), filter 0.9s ease`,
+              transitionDelay: `${index * 0.12}s`,
             }}
             className="project-text-col"
           >
@@ -165,8 +167,10 @@ export function ProjectPanel({ project, index }: ProjectPanelProps) {
             style={{
               order: isEven ? 1 : 0,
               opacity: inView ? 1 : 0,
-              transform: inView ? "none" : `translateX(${isEven ? "24px" : "-24px"})`,
-              transition: `opacity 0.85s var(--ease-expo) 0.1s, transform 0.85s var(--ease-expo) 0.1s`,
+              transform: inView ? "none" : `translateX(${isEven ? "40px" : "-40px"}) scale(0.96)`,
+              filter: inView ? "blur(0px)" : "blur(8px)",
+              transition: `opacity 0.9s var(--ease-expo) 0.1s, transform 0.9s var(--ease-expo) 0.1s, filter 0.9s ease 0.1s`,
+              transitionDelay: `${index * 0.12 + 0.08}s`,
             }}
             className="project-media-col"
           >

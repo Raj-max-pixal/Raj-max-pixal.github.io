@@ -18,13 +18,13 @@ export function ProjectPreview({ project, hovered, onClick }: ProjectPreviewProp
       aria-label={`Open ${project.name} details`}
       onKeyDown={e => { if (e.key === "Enter" || e.key === " ") onClick(); }}
       style={{
-        boxShadow: hovered ? `0 0 80px ${project.accentColor}20` : "none",
-        borderColor: hovered ? `${project.accentColor}35` : "var(--border)",
+        boxShadow: hovered ? `0 0 100px ${project.accentColor}30, 0 0 0 1px ${project.accentColor}20` : "none",
+        borderColor: hovered ? `${project.accentColor}50` : "var(--border)",
         cursor: "pointer",
         position: "relative",
         overflow: "hidden",
-        transition: "box-shadow 0.4s, border-color 0.4s, transform 0.3s var(--ease-expo)",
-        transform: hovered ? "scale(1.015)" : "scale(1)",
+        transition: "box-shadow 0.5s, border-color 0.5s, transform 0.4s var(--ease-expo)",
+        transform: hovered ? "scale(1.03)" : "scale(1)",
       }}
     >
       {/* Gradient background */}

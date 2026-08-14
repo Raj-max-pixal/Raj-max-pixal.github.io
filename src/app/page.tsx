@@ -5,9 +5,10 @@ import { ProjectsSection } from "@/components/projects/ProjectsSection";
 import { StatsSection } from "@/components/stats/StatsSection";
 import { ExperienceSection } from "@/components/experience/ExperienceSection";
 import { SkillsSection } from "@/components/skills/SkillsSection";
+import { HackathonsSection } from "@/components/hackathons/HackathonsSection";
 import { EducationSection } from "@/components/education/EducationSection";
 import { CertificationsSection } from "@/components/certifications/CertificationsSection";
-import { HackathonsSection } from "@/components/hackathons/HackathonsSection";
+import { PlatformMarquee } from "@/components/ui/PlatformMarquee";
 import { ContactSection } from "@/components/contact/ContactSection";
 import { Footer } from "@/components/ui/Footer";
 
@@ -21,6 +22,9 @@ export default function Home() {
       <StatsSection />
       <ExperienceSection />
       <SkillsSection />
+      <section style={{ padding: "clamp(3rem, 6vw, 5rem) 0", position: "relative", overflow: "hidden" }}>
+        <PlatformMarquee />
+      </section>
       <HackathonsSection />
       <EducationSection />
       <CertificationsSection />

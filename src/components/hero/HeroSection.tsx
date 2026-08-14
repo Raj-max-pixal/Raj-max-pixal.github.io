@@ -112,8 +112,9 @@ export function HeroSection() {
           className="section-label"
           style={{
             opacity: visible ? 1 : 0,
-            transform: visible ? "none" : "translateY(8px)",
-            transition: "opacity 0.7s ease, transform 0.7s ease",
+            transform: visible ? "none" : "translateY(12px)",
+            filter: visible ? "blur(0px)" : "blur(4px)",
+            transition: "opacity 0.6s ease, transform 0.6s var(--ease-expo), filter 0.6s ease",
             transitionDelay: "0s",
           }}
         >
@@ -126,9 +127,10 @@ export function HeroSection() {
           style={{
             color: "var(--text-primary)",
             opacity: visible ? 1 : 0,
-            transform: visible ? "none" : "translateY(28px)",
-            transition: "opacity 1s ease, transform 1s var(--ease-expo)",
-            transitionDelay: "0.18s",
+            transform: visible ? "none" : "translateY(40px) scale(0.96)",
+            filter: visible ? "blur(0px)" : "blur(8px)",
+            transition: "opacity 1.2s var(--ease-expo), transform 1.2s var(--ease-expo), filter 1.2s ease",
+            transitionDelay: "0.15s",
           }}
         >
           RAJA
@@ -150,9 +152,10 @@ export function HeroSection() {
             alignItems: "center",
             gap: "0.6rem",
             opacity: visible ? 1 : 0,
-            transform: visible ? "none" : "translateY(16px)",
-            transition: "opacity 0.9s ease, transform 0.9s ease",
-            transitionDelay: "0.38s",
+            transform: visible ? "none" : "translateY(20px)",
+            filter: visible ? "blur(0px)" : "blur(6px)",
+            transition: "opacity 0.8s ease, transform 0.8s var(--ease-expo), filter 0.8s ease",
+            transitionDelay: "0.35s",
           }}
         >
           Software Engineer
@@ -168,12 +171,14 @@ export function HeroSection() {
         <div
           style={{
             opacity: visible ? 1 : 0,
-            transition: "opacity 1s ease",
+            transform: visible ? "none" : "translateY(16px)",
+            filter: visible ? "blur(0px)" : "blur(4px)",
+            transition: "opacity 0.8s ease, transform 0.8s var(--ease-expo), filter 0.8s ease",
             transitionDelay: "0.5s",
             marginTop: "0.25rem",
           }}
         >
-          <TechMarquee speed={32} />
+          <TechMarquee speed={40} />
         </div>
 
         {/* Copy */}
@@ -183,9 +188,10 @@ export function HeroSection() {
             color: "var(--text-secondary)",
             maxWidth: "400px",
             opacity: visible ? 1 : 0,
-            transform: visible ? "none" : "translateY(14px)",
-            transition: "opacity 0.9s ease, transform 0.9s ease",
-            transitionDelay: "0.62s",
+            transform: visible ? "none" : "translateY(18px)",
+            filter: visible ? "blur(0px)" : "blur(5px)",
+            transition: "opacity 0.9s ease, transform 0.9s var(--ease-expo), filter 0.9s ease",
+            transitionDelay: "0.65s",
           }}
         >
           Building intelligent products, immersive experiences,
@@ -199,9 +205,10 @@ export function HeroSection() {
             flexWrap: "wrap",
             gap: "0.85rem",
             opacity: visible ? 1 : 0,
-            transform: visible ? "none" : "translateY(12px)",
-            transition: "opacity 0.9s ease, transform 0.9s ease",
-            transitionDelay: "0.78s",
+            transform: visible ? "none" : "translateY(20px) scale(0.95)",
+            filter: visible ? "blur(0px)" : "blur(3px)",
+            transition: "opacity 0.8s ease, transform 0.8s var(--ease-expo), filter 0.8s ease",
+            transitionDelay: "0.8s",
           }}
         >
           <button

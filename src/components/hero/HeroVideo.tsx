@@ -14,14 +14,21 @@ export function HeroVideo({ visible }: HeroVideoProps) {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    // Hero video is above-the-fold — preload metadata, play when visible
-    v.load();
-    if (!reducedMotion) {
-      const t = setTimeout(() => {
-        v.play().catch(() => {/* autoplay blocked — poster shows */});
-      }, 400);
-      return () => clearTimeout(t);
-    }
+    
+    // Auto-play video as soon as possible
+    const playVideo = async () => {
+      try {
+        await v.play();
+      } catch {
+        console.log("Autoplay blocked, will play on interaction");
+      }
+    };
+    
+    // Try to play immediately, then retry after a short delay
+    playVideo();
+    const retryTimer = setTimeout(playVideo, 500);
+    
+    return () => clearTimeout(retryTimer);
   }, [reducedMotion]);
 
   return (
@@ -69,10 +76,11 @@ export function HeroVideo({ visible }: HeroVideoProps) {
       {/* Video — mix-blend-mode:screen makes black bg transparent */}
       <video
         ref={videoRef}
+        autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         style={{
           width: "100%",
           height: "100%",

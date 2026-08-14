@@ -113,8 +113,9 @@ export function SkillsSection() {
               key={`${skill.name}-${i}`}
               style={{
                 opacity: inView ? 1 : 0,
-                transform: inView ? "none" : "translateY(16px)",
-                transition: `opacity 0.5s var(--ease-expo) ${Math.min(i * 0.04, 0.5)}s, transform 0.5s var(--ease-expo) ${Math.min(i * 0.04, 0.5)}s`,
+                transform: inView ? "none" : "translateY(20px) scale(0.95)",
+                filter: inView ? "blur(0px)" : "blur(4px)",
+                transition: `opacity 0.6s var(--ease-expo) ${Math.min(i * 0.08, 0.8)}s, transform 0.6s var(--ease-expo) ${Math.min(i * 0.08, 0.8)}s, filter 0.6s ease ${Math.min(i * 0.08, 0.8)}s`,
               }}
             >
               <TechIconCard name={skill.name} icon={skill.icon} />

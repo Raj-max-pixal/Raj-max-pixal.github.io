@@ -152,8 +152,9 @@ export function HackathonsSection() {
                   borderRadius: "var(--r-md)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}
-                dangerouslySetInnerHTML={{ __html: PLATFORMS[0].icon }}
-              />
+              >
+                <div dangerouslySetInnerHTML={{ __html: PLATFORMS[0].icon }} />
+              </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
                   <span style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.1em", color: "#00A4EF", textTransform: "uppercase" }}>
@@ -241,20 +242,22 @@ export function HackathonsSection() {
                   gap: "0.6rem",
                   padding: "0.65rem 1.1rem",
                   background: "var(--bg-surface)",
-                  border: `1px solid ${hovered === platform.id ? platform.color + "40" : "var(--border)"}`,
+                  border: `1px solid ${hovered === platform.id ? platform.color + "60" : "var(--border)"}`,
                   borderRadius: "var(--r-full)",
-                  transition: "all 0.25s ease",
-                  transform: hovered === platform.id ? "translateY(-3px)" : "none",
-                  boxShadow: hovered === platform.id ? `0 8px 24px rgba(0,0,0,0.25), 0 0 0 1px ${platform.color}20` : "none",
+                  transition: "all 0.35s var(--ease-spring)",
+                  boxShadow: hovered === platform.id ? `0 12px 32px rgba(0,0,0,0.3), 0 0 0 1px ${platform.color}30, 0 0 20px ${platform.color}15` : "none",
                   opacity: inView ? 1 : 0,
-                  transitionDelay: `${i * 0.05}s`,
+                  transform: inView ? (hovered === platform.id ? "translateY(-5px) scale(1.03)" : "none") : "translateY(20px) scale(0.95)",
+                  filter: inView ? "blur(0px)" : "blur(4px)",
+                  transitionDelay: `${i * 0.08}s`,
                   cursor: "default",
                 }}
               >
                 <div
                   style={{ width: "20px", height: "20px", flexShrink: 0 }}
-                  dangerouslySetInnerHTML={{ __html: platform.icon }}
-                />
+                >
+                  <div dangerouslySetInnerHTML={{ __html: platform.icon }} />
+                </div>
                 <span
                   style={{
                     fontSize: "0.8rem",

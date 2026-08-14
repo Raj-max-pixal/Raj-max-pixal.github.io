@@ -278,8 +278,9 @@ function JourneyCard({
         width: "100%",
         maxWidth: "400px",
         opacity: inView ? 1 : 0,
-        transform: inView ? "none" : `translateX(${direction === "left" ? "-20px" : "20px"}) translateY(10px)`,
-        transition: "opacity 0.7s var(--ease-expo), transform 0.7s var(--ease-expo)",
+        transform: inView ? "none" : `translateX(${direction === "left" ? "-40px" : "40px"}) translateY(20px) scale(0.96)`,
+        filter: inView ? "blur(0px)" : "blur(6px)",
+        transition: "opacity 0.85s var(--ease-expo), transform 0.85s var(--ease-expo), filter 0.85s ease",
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.65rem", flexWrap: "wrap", gap: "0.4rem" }}>
@@ -313,9 +314,9 @@ function JourneyCard({
         {item.title}
       </h3>
 
-      <p className="t-body" style={{ color: "var(--text-secondary)", marginBottom: "1.1rem", lineHeight: 1.7, fontSize: "0.85rem" }}
-        dangerouslySetInnerHTML={{ __html: item.description }}
-      />
+      <p className="t-body" style={{ color: "var(--text-secondary)", marginBottom: "1.1rem", lineHeight: 1.7, fontSize: "0.85rem" }}>
+        {item.description}
+      </p>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
         {item.tags.map(tag => (

@@ -169,8 +169,9 @@ export function StatsSection() {
             style={{
               borderRight: i < STATS.length - 1 ? "1px solid var(--border)" : "none",
               opacity: inView ? 1 : 0,
-              transform: inView ? "none" : "translateY(20px)",
-              transition: `opacity 0.7s var(--ease-expo) ${i * 0.1}s, transform 0.7s var(--ease-expo) ${i * 0.1}s`,
+              transform: inView ? "none" : "translateY(30px) scale(0.95)",
+              filter: inView ? "blur(0px)" : "blur(6px)",
+              transition: `opacity 0.8s var(--ease-expo) ${i * 0.12}s, transform 0.8s var(--ease-expo) ${i * 0.12}s, filter 0.8s ease ${i * 0.12}s`,
             }}
           >
             <StatItem
