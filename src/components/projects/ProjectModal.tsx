@@ -106,7 +106,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
                 <div>
                   <span style={{
-                    display: "inline-block",
+                    display: "block",
                     padding: "0.15rem 0.6rem",
                     background: `${project.accentColor}14`,
                     border: `1px solid ${project.accentColor}28`,
@@ -117,7 +117,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     color: project.accentColor,
                     textTransform: "uppercase" as const,
                     marginBottom: "0.25rem",
-                    display: "block" as const,
                   }}>
                     {project.category}
                   </span>

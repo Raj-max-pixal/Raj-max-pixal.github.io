@@ -21,9 +21,9 @@ export default function Home() {
       <StatsSection />
       <ExperienceSection />
       <SkillsSection />
+      <HackathonsSection />
       <EducationSection />
       <CertificationsSection />
-      <HackathonsSection />
       <ContactSection />
       <Footer />
     </main>

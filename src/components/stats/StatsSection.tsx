@@ -23,10 +23,10 @@ const STATS = [
     sublabel: "Explored & Used",
   },
   {
-    value: 3,
+    value: 5,
     suffix: "+",
     label: "Certifications",
-    sublabel: "Google Cloud",
+    sublabel: "Professional Credentials",
   },
 ];
 

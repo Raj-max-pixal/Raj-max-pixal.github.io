@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { HeroVideo } from "./HeroVideo";
 import { TechMarquee } from "@/components/ui/TechMarquee";
+import { InteractiveParticleField } from "@/components/ui/InteractiveParticleField";
 import { ChevronDown } from "lucide-react";
 
 export function HeroSection() {
@@ -89,6 +90,9 @@ export function HeroSection() {
         }}
       />
 
+      {/* Interactive particle field */}
+      <InteractiveParticleField particleCount={80} style={{ opacity: 0.5 }} />
+
       {/* ── Left: Typography ──────────────────────────────────── */}
       <div
         className="hero-text"
@@ -156,6 +160,8 @@ export function HeroSection() {
           AI Builder
           <span style={{ color: "var(--accent)", fontSize: "0.5em" }}>●</span>
           Full-Stack Developer
+          <span style={{ color: "var(--accent)", fontSize: "0.5em" }}>●</span>
+          CloudSecOps Explorer
         </p>
 
         {/* Running marquee text */}

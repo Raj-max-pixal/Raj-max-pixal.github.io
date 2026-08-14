@@ -13,6 +13,9 @@ const ITEMS = [
   "CLOUDSECOPS",
   "PRODUCT BUILDER",
   "OPEN SOURCE",
+  "SOFTWARE ENGINEER",
+  "AI BUILDER",
+  "FULL-STACK DEVELOPER",
 ];
 
 interface TechMarqueeProps {

@@ -11,11 +11,12 @@ const NAV_ITEMS = [
   { label: "Skills",         href: "skills" },
   { label: "Education",      href: "education" },
   { label: "Certifications", href: "certifications" },
+  { label: "Hackathons",     href: "hackathons" },
   { label: "Contact",        href: "contact" },
 ];
 
-const NAV_PRIMARY = NAV_ITEMS.slice(0, 5);
-const NAV_MORE    = NAV_ITEMS.slice(5);
+const NAV_PRIMARY = NAV_ITEMS.filter(item => ["Home", "About", "Projects", "Journey", "Skills"].includes(item.label));
+const NAV_MORE    = NAV_ITEMS.filter(item => !["Home", "About", "Projects", "Journey", "Skills"].includes(item.label));
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
