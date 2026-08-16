@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Menu, X, Sun, Moon, Download } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Home",           href: "home" },
@@ -220,24 +220,6 @@ export function Navigation() {
 
         {/* Desktop right actions */}
         <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-          <button
-            id="theme-toggle"
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            onClick={() => setTheme(t => t === "dark" ? "light" : "dark")}
-            style={{
-              background: "var(--bg-elevated)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--r-full)",
-              width: "34px", height: "34px",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "var(--text-secondary)",
-              transition: "all 0.2s ease",
-              flexShrink: 0,
-            }}
-          >
-            {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
-          </button>
-
           <div style={{ position: "relative" }}>
             <a
               href="/Raja_Saranya_T_Resume_Microsoft.docx"
@@ -297,13 +279,6 @@ export function Navigation() {
 
         {/* Mobile hamburger */}
         <div className="show-mobile" style={{ alignItems: "center", gap: "0.5rem" }}>
-          <button
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            onClick={() => setTheme(t => t === "dark" ? "light" : "dark")}
-            style={{ background: "none", border: "none", color: "var(--text-secondary)", lineHeight: 0 }}
-          >
-            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
           <a
             href="/Raja_Saranya_T_Resume_Microsoft.docx"
             download

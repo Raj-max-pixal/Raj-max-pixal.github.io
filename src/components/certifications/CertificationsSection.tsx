@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ProjectNetwork } from "@/components/projects/ProjectNetwork";
 
 const CERTIFICATIONS = [
   {
@@ -84,6 +85,9 @@ export function CertificationsSection() {
       className="section-pad"
       style={{ borderTop: "1px solid var(--border)", position: "relative", overflow: "hidden" }}
     >
+      {/* Background spider web constellation network */}
+      <ProjectNetwork />
+
       {/* BG accent */}
       <div aria-hidden="true" style={{
         position: "absolute", left: "-12%", bottom: "10%",

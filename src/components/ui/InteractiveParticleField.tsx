@@ -43,7 +43,7 @@ export function InteractiveParticleField({
 
     // Determine particle count based on device
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const count = particleCount ?? (isMobile ? 55 : 120);
+    const count = particleCount ?? (isMobile ? 90 : 200);
 
     const colors = [
       "rgba(255, 255, 255, ",

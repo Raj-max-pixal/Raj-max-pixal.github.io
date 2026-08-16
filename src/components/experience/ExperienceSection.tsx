@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { InteractiveParticleField } from "@/components/ui/InteractiveParticleField";
 
 const JOURNEY = [
   {
@@ -143,6 +144,9 @@ export function ExperienceSection() {
       className="section-pad"
       style={{ borderTop: "1px solid var(--border)", position: "relative", overflow: "hidden" }}
     >
+      {/* Background black/white particle dots field */}
+      <InteractiveParticleField particleCount={80} />
+
       <div aria-hidden="true" style={{
         position: "absolute", left: "-10%", top: "10%",
         width: "500px", height: "500px", borderRadius: "50%",

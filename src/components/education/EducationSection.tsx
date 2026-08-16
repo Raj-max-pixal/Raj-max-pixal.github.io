@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ProjectNetwork } from "@/components/projects/ProjectNetwork";
 
 const EDUCATION = [
   {
@@ -53,6 +54,9 @@ export function EducationSection() {
       className="section-pad"
       style={{ borderTop: "1px solid var(--border)", position: "relative", overflow: "hidden" }}
     >
+      {/* Background neural web network */}
+      <ProjectNetwork />
+
       {/* BG glow */}
       <div aria-hidden="true" style={{
         position: "absolute", right: "-10%", top: "10%",
@@ -118,14 +122,18 @@ export function EducationSection() {
                   </div>
                 </div>
 
-                {/* Card */}
+                {/* Card with inner Neural Web Canvas */}
                 <div
                   className="journey-card"
                   style={{
                     flex: 1,
                     paddingBottom: "1.75rem",
+                    position: "relative",
+                    overflow: "hidden",
                   }}
                 >
+                  {/* Neural web network canvas inside school and college box */}
+                  <ProjectNetwork style={{ opacity: 0.6 }} />
                   {/* Header row */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem", flexWrap: "wrap", gap: "0.5rem" }}>
                     <span
