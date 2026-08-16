@@ -24,7 +24,7 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
     if (!ctx) return;
 
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const count = reducedMotion ? 0 : (isMobile ? 45 : 90);
+    const count = reducedMotion ? 0 : (isMobile ? 25 : 55);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {

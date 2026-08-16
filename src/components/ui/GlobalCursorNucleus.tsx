@@ -129,6 +129,8 @@ export function GlobalCursorNucleus() {
         pointerEvents: "none",
         zIndex: 9999,
         display: "block",
+        willChange: "transform",
+        transform: "translateZ(0)",
       }}
     />
   );

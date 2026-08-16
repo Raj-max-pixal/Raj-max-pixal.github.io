@@ -113,11 +113,34 @@ export function ProjectPanel({ project, index }: ProjectPanelProps) {
             </p>
 
             {/* Tech stack */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "2rem" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: project.metrics ? "1rem" : "2rem" }}>
               {project.techStack.map(t => (
                 <span key={t} className="tag">{t}</span>
               ))}
             </div>
+
+            {/* Metrics */}
+            {project.metrics && project.metrics.length > 0 && (
+              <div style={{ display: "flex", gap: "1rem", marginBottom: "2rem", flexWrap: "wrap" }}>
+                {project.metrics.map(metric => (
+                  <div key={metric} style={{ 
+                    display: "flex", 
+                    alignItems: "center", 
+                    gap: "0.4rem",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: project.accentColor,
+                    background: `${project.accentColor}15`,
+                    padding: "0.3rem 0.6rem",
+                    borderRadius: "4px",
+                    border: `1px solid ${project.accentColor}30`
+                  }}>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    {metric}
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Links */}
             <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>

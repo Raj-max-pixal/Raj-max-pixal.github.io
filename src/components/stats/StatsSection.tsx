@@ -10,13 +10,15 @@ function useCountUp(target: number, inView: boolean, reducedMotion: boolean, dur
 
   useEffect(() => {
     if (!inView || reducedMotion) {
-      setCount(target);
+      setCount(reducedMotion ? target : 0);
       return;
     }
-    setCount(0);
-    const start = performance.now();
+    
+    let startTime: number | null = null;
+    
     const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
+      if (!startTime) startTime = now;
+      const progress = Math.min((now - startTime) / duration, 1);
       // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.round(eased * target));
@@ -25,6 +27,7 @@ function useCountUp(target: number, inView: boolean, reducedMotion: boolean, dur
       }
     };
     rafRef.current = requestAnimationFrame(tick);
+    
     return () => cancelAnimationFrame(rafRef.current);
   }, [inView, target, reducedMotion, duration]);
 

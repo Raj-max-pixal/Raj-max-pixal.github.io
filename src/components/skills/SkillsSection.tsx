@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { skillCategories } from "@/data/skills";
 import { TechIconCard } from "./TechIconCard";
 import { ProjectNetwork } from "@/components/projects/ProjectNetwork";
-import { InteractiveParticleField } from "@/components/ui/InteractiveParticleField";
 
 const CATEGORIES = [
   { id: "all", label: "All" },
@@ -57,9 +56,6 @@ export function SkillsSection() {
     >
       {/* Background animative spider-web constellation canvas */}
       <ProjectNetwork />
-
-      {/* Background animative particle dots field */}
-      <InteractiveParticleField particleCount={60} />
 
       {/* BG accent */}
       <div aria-hidden="true" style={{
