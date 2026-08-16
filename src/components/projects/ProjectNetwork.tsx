@@ -24,7 +24,7 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
     if (!ctx) return;
 
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const count = reducedMotion ? 0 : (isMobile ? 35 : 75);
+    const count = reducedMotion ? 0 : (isMobile ? 45 : 90);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {
@@ -42,9 +42,9 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
         y: Math.random() * h,
         baseX: Math.random() * w,
         baseY: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        radius: 1.2 + Math.random() * 1.6,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: 1.5 + Math.random() * 1.8,
       }));
     };
 
@@ -92,13 +92,13 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
       angleRef.current += 0.03;
 
       const particles = particlesRef.current;
-      const connectionDistance = 135;
-      const interactionRadius = 200;
+      const connectionDistance = 160;
+      const interactionRadius = 220;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Drift
+        // Autonomous continuous drift
         p.baseX += p.vx;
         p.baseY += p.vy;
 
@@ -117,7 +117,7 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < interactionRadius) {
-            const pull = (1 - dist / interactionRadius) * 22;
+            const pull = (1 - dist / interactionRadius) * 24;
             x += (dx / dist) * pull;
             y += (dy / dist) * pull;
           }
@@ -130,12 +130,16 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
         const distToMouse = Math.sqrt((p.x - mouse.x) ** 2 + (p.y - mouse.y) ** 2);
         const isNear = mouse.active && distToMouse < interactionRadius;
 
+        // Draw bright constellation node
         ctx.beginPath();
-        ctx.arc(p.x, p.y, isNear ? p.radius * 1.4 : p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = isNear ? "rgba(59, 126, 255, 0.85)" : "rgba(59, 126, 255, 0.35)";
+        ctx.arc(p.x, p.y, isNear ? p.radius * 1.5 : p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isNear ? "rgba(6, 182, 212, 0.95)" : "rgba(255, 255, 255, 0.65)";
+        ctx.shadowColor = isNear ? "#06b6d4" : "#3b7eff";
+        ctx.shadowBlur = isNear ? 8 : 4;
         ctx.fill();
+        ctx.shadowBlur = 0;
 
-        // Draw connections
+        // Draw crisp interconnecting geometric spider web lines
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx2 = p.x - p2.x;
@@ -143,12 +147,14 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
           const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
 
           if (dist2 < connectionDistance) {
-            const opacity = (1 - dist2 / connectionDistance) * (isNear ? 0.28 : 0.11);
+            const alphaRatio = 1 - dist2 / connectionDistance;
+            const opacity = isNear ? alphaRatio * 0.45 : alphaRatio * 0.22;
+            
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = isNear ? `rgba(6, 182, 212, ${opacity})` : `rgba(59, 126, 255, ${opacity})`;
-            ctx.lineWidth = isNear ? 0.85 : 0.5;
+            ctx.strokeStyle = isNear ? `rgba(6, 182, 212, ${opacity})` : `rgba(255, 255, 255, ${opacity})`;
+            ctx.lineWidth = isNear ? 1.0 : 0.65;
             ctx.stroke();
           }
         }
@@ -157,41 +163,41 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
       // Draw Cursor Nucleus Effect at (mouse.x, mouse.y)
       if (mouse.active && mouse.x > 0 && mouse.y > 0) {
         // Soft radial glow
-        const grad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 45);
-        grad.addColorStop(0, "rgba(59, 126, 255, 0.22)");
-        grad.addColorStop(0.5, "rgba(6, 182, 212, 0.08)");
+        const grad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 50);
+        grad.addColorStop(0, "rgba(59, 126, 255, 0.28)");
+        grad.addColorStop(0.5, "rgba(6, 182, 212, 0.12)");
         grad.addColorStop(1, "transparent");
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 45, 0, Math.PI * 2);
+        ctx.arc(mouse.x, mouse.y, 50, 0, Math.PI * 2);
         ctx.fillStyle = grad;
         ctx.fill();
 
         // Nucleus core
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = "#3b7eff";
-        ctx.shadowColor = "#3b7eff";
-        ctx.shadowBlur = 10;
+        ctx.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.shadowColor = "#06b6d4";
+        ctx.shadowBlur = 12;
         ctx.fill();
         ctx.shadowBlur = 0;
 
         // Satellite orbiting nodes
         for (let k = 0; k < 3; k++) {
           const orbAngle = angleRef.current + (k * Math.PI * 2) / 3;
-          const orbDist = 18 + k * 4;
+          const orbDist = 20 + k * 4;
           const ox = mouse.x + Math.cos(orbAngle) * orbDist;
           const oy = mouse.y + Math.sin(orbAngle) * orbDist;
 
           ctx.beginPath();
-          ctx.arc(ox, oy, 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(6, 182, 212, 0.8)";
+          ctx.arc(ox, oy, 1.8, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(6, 182, 212, 0.9)";
           ctx.fill();
 
           ctx.beginPath();
           ctx.moveTo(mouse.x, mouse.y);
           ctx.lineTo(ox, oy);
-          ctx.strokeStyle = "rgba(59, 126, 255, 0.25)";
-          ctx.lineWidth = 0.5;
+          ctx.strokeStyle = "rgba(59, 126, 255, 0.35)";
+          ctx.lineWidth = 0.7;
           ctx.stroke();
         }
       }
@@ -221,7 +227,7 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
         height: "100%",
         pointerEvents: "none",
         zIndex: 0,
-        opacity: 0.8,
+        opacity: 0.9,
         ...style,
       }}
     />

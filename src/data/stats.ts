@@ -1,10 +1,11 @@
 import { projects } from "./projects";
 import { skillCategories } from "./skills";
 
-// Dynamically compute unique technology count from actual skills data
-const uniqueTechNames = new Set(
-  skillCategories.flatMap((cat) => cat.skills.map((s) => s.name.trim().toLowerCase()))
-);
+// Dynamically compute unique technology count across skills and project technologies
+const uniqueTechNames = new Set([
+  ...skillCategories.flatMap((cat) => cat.skills.map((s) => s.name.trim().toLowerCase())),
+  ...projects.flatMap((p) => p.technologies.map((t) => t.trim().toLowerCase())),
+]);
 
 export const PORTFOLIO_STATS = [
   {
@@ -32,4 +33,5 @@ export const PORTFOLIO_STATS = [
     sublabel: "Verified Credentials",
   },
 ];
+
 

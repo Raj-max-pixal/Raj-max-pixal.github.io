@@ -11,11 +11,12 @@ import { CertificationsSection } from "@/components/certifications/Certification
 import { PlatformMarquee } from "@/components/ui/PlatformMarquee";
 import { ContactSection } from "@/components/contact/ContactSection";
 import { Footer } from "@/components/ui/Footer";
-import { FloatingVideoWidget } from "@/components/ui/FloatingVideoWidget";
+import { GlobalCursorNucleus } from "@/components/ui/GlobalCursorNucleus";
 
 export default function Home() {
   return (
     <main>
+      <GlobalCursorNucleus />
       <Navigation />
       <HeroSection />
       <AboutSection />
@@ -31,8 +32,9 @@ export default function Home() {
       <CertificationsSection />
       <ContactSection />
       <Footer />
-      <FloatingVideoWidget />
     </main>
   );
 }
+
+
 
