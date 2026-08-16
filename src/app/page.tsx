@@ -11,6 +11,7 @@ import { CertificationsSection } from "@/components/certifications/Certification
 import { PlatformMarquee } from "@/components/ui/PlatformMarquee";
 import { ContactSection } from "@/components/contact/ContactSection";
 import { Footer } from "@/components/ui/Footer";
+import { FloatingVideoWidget } from "@/components/ui/FloatingVideoWidget";
 
 export default function Home() {
   return (
@@ -30,6 +31,8 @@ export default function Home() {
       <CertificationsSection />
       <ContactSection />
       <Footer />
+      <FloatingVideoWidget />
     </main>
   );
 }
+

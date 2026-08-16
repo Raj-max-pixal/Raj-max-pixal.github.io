@@ -1,39 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Mail, Github, Linkedin, ArrowRight } from "lucide-react";
-
-const LINKS = [
-  {
-    id: "email-link",
-    label: "Email",
-    value: "rajasaranyaraj20@gmail.com",
-    href: "mailto:rajasaranyaraj20@gmail.com",
-    icon: <Mail size={14} />,
-    description: "For work & collaborations",
-  },
-  {
-    id: "github-link",
-    label: "GitHub",
-    value: "github.com/Raj-max-pixal",
-    href: "https://github.com/Raj-max-pixal",
-    icon: <Github size={14} />,
-    description: "Explore my projects",
-  },
-  {
-    id: "linkedin-link",
-    label: "LinkedIn",
-    value: "linkedin.com/in/raja-saranya-ba9545342",
-    href: "https://linkedin.com/in/raja-saranya-ba9545342",
-    icon: <Linkedin size={14} />,
-    description: "Professional profile",
-  },
-];
+import { ArrowRight } from "lucide-react";
+import { SocialLinks } from "@/components/ui/SocialLinks";
 
 export function ContactSection() {
   const ref = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
-  const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -122,7 +95,7 @@ export function ContactSection() {
           style={{
             display: "flex",
             justifyContent: "center",
-            marginBottom: "4rem",
+            marginBottom: "3.5rem",
             opacity: inView ? 1 : 0,
             transform: inView ? "none" : "translateY(12px)",
             transition: "opacity 0.8s ease 0.32s, transform 0.8s ease 0.32s",
@@ -139,66 +112,12 @@ export function ContactSection() {
           </a>
         </div>
 
-        {/* Contact links */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "1rem",
-            justifyContent: "center",
-            opacity: inView ? 1 : 0,
-            transition: "opacity 0.8s ease 0.42s",
-          }}
-        >
-          {LINKS.map(link => (
-            <a
-              key={link.id}
-              id={link.id}
-              href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              aria-label={link.label}
-              onMouseEnter={() => setHovered(link.id)}
-              onMouseLeave={() => setHovered(null)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.7rem",
-                padding: "0.9rem 1.5rem",
-                background: "var(--bg-surface)",
-                border: `1px solid ${hovered === link.id ? "var(--border-strong)" : "var(--border)"}`,
-                borderRadius: "var(--r-lg)",
-                textDecoration: "none",
-                transition: "all 0.25s ease",
-                transform: hovered === link.id ? "translateY(-3px)" : "none",
-                boxShadow: hovered === link.id ? "0 10px 30px rgba(0,0,0,0.3)" : "none",
-                maxWidth: "320px",
-              }}
-            >
-              <div
-                style={{
-                  width: "32px", height: "32px",
-                  borderRadius: "var(--r-md)",
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: hovered === link.id ? "var(--accent)" : "var(--text-secondary)",
-                  transition: "color 0.2s",
-                  flexShrink: 0,
-                }}
-              >
-                {link.icon}
-              </div>
-              <div>
-                <p style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.08em", color: "var(--text-tertiary)", textTransform: "uppercase" as const, marginBottom: "0.15rem" }}>
-                  {link.label}
-                </p>
-                <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", letterSpacing: "0.01em" }}>
-                  {link.value}
-                </p>
-              </div>
-            </a>
-          ))}
+        {/* Connect / Find Me Online section */}
+        <div style={{ maxWidth: "800px", margin: "0 auto 3rem", textAlign: "center" }}>
+          <p className="t-label" style={{ color: "var(--text-tertiary)", marginBottom: "1.5rem" }}>
+            Connect / Find Me Online
+          </p>
+          <SocialLinks />
         </div>
 
         {/* Location note */}
@@ -219,3 +138,4 @@ export function ContactSection() {
     </section>
   );
 }
+

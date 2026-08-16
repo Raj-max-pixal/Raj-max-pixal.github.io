@@ -12,9 +12,10 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const reducedMotion = useReducedMotion();
   const particlesRef = useRef<Array<{ x: number; y: number; vx: number; vy: number; baseX: number; baseY: number; radius: number }>>([]);
-  const mouseRef = useRef({ x: -1000, y: -1000 });
+  const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000, active: false });
   const rafRef = useRef<number>(0);
   const isVisibleRef = useRef<boolean>(true);
+  const angleRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -23,7 +24,7 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
     if (!ctx) return;
 
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const count = reducedMotion ? 0 : (isMobile ? 35 : 70);
+    const count = reducedMotion ? 0 : (isMobile ? 35 : 75);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {
@@ -41,9 +42,9 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
         y: Math.random() * h,
         baseX: Math.random() * w,
         baseY: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: 1.5 + Math.random() * 1.5,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        radius: 1.2 + Math.random() * 1.6,
       }));
     };
 
@@ -53,15 +54,18 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
+      mouseRef.current.targetX = e.clientX - rect.left;
+      mouseRef.current.targetY = e.clientY - rect.top;
+      mouseRef.current.active = true;
+    };
+
+    const onMouseLeave = () => {
+      mouseRef.current.active = false;
     };
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
+    document.addEventListener("mouseleave", onMouseLeave);
 
-    // Visibility observer to save power when tab/canvas is hidden
     const onVisibilityChange = () => {
       isVisibleRef.current = !document.hidden;
     };
@@ -81,49 +85,57 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
 
-      const particles = particlesRef.current;
+      // Smooth mouse interpolation
       const mouse = mouseRef.current;
-      const connectionDistance = 130;
+      mouse.x += (mouse.targetX - mouse.x) * 0.12;
+      mouse.y += (mouse.targetY - mouse.y) * 0.12;
+      angleRef.current += 0.03;
+
+      const particles = particlesRef.current;
+      const connectionDistance = 135;
+      const interactionRadius = 200;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Gentle drift
+        // Drift
         p.baseX += p.vx;
         p.baseY += p.vy;
 
-        // Wrap around
         if (p.baseX < 0) p.baseX = w;
         if (p.baseX > w) p.baseX = 0;
         if (p.baseY < 0) p.baseY = h;
         if (p.baseY > h) p.baseY = 0;
 
-        // Mouse interaction
-        const dx = p.baseX - mouse.x;
-        const dy = p.baseY - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const interactionRadius = 180;
-
+        // Interaction toward mouse cursor location
         let x = p.baseX;
         let y = p.baseY;
 
-        if (dist < interactionRadius) {
-          const force = (interactionRadius - dist) / interactionRadius;
-          x += (dx / dist) * force * 18;
-          y += (dy / dist) * force * 18;
+        if (mouse.active) {
+          const dx = mouse.x - p.baseX;
+          const dy = mouse.y - p.baseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < interactionRadius) {
+            const pull = (1 - dist / interactionRadius) * 22;
+            x += (dx / dist) * pull;
+            y += (dy / dist) * pull;
+          }
         }
 
         p.x = x;
         p.y = y;
 
-        // Draw node
-        const isNearMouse = dist < interactionRadius;
+        // Calculate distance from cursor for node styling
+        const distToMouse = Math.sqrt((p.x - mouse.x) ** 2 + (p.y - mouse.y) ** 2);
+        const isNear = mouse.active && distToMouse < interactionRadius;
+
         ctx.beginPath();
-        ctx.arc(p.x, p.y, isNearMouse ? p.radius * 1.5 : p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = isNearMouse ? "rgba(59, 126, 255, 0.8)" : "rgba(59, 126, 255, 0.35)";
+        ctx.arc(p.x, p.y, isNear ? p.radius * 1.4 : p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isNear ? "rgba(59, 126, 255, 0.85)" : "rgba(59, 126, 255, 0.35)";
         ctx.fill();
 
-        // Draw connections (spider web effect)
+        // Draw connections
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx2 = p.x - p2.x;
@@ -131,14 +143,56 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
           const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
 
           if (dist2 < connectionDistance) {
-            const opacity = (1 - dist2 / connectionDistance) * (isNearMouse ? 0.22 : 0.1);
+            const opacity = (1 - dist2 / connectionDistance) * (isNear ? 0.28 : 0.11);
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(59, 126, 255, ${opacity})`;
-            ctx.lineWidth = isNearMouse ? 0.8 : 0.5;
+            ctx.strokeStyle = isNear ? `rgba(6, 182, 212, ${opacity})` : `rgba(59, 126, 255, ${opacity})`;
+            ctx.lineWidth = isNear ? 0.85 : 0.5;
             ctx.stroke();
           }
+        }
+      }
+
+      // Draw Cursor Nucleus Effect at (mouse.x, mouse.y)
+      if (mouse.active && mouse.x > 0 && mouse.y > 0) {
+        // Soft radial glow
+        const grad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 45);
+        grad.addColorStop(0, "rgba(59, 126, 255, 0.22)");
+        grad.addColorStop(0.5, "rgba(6, 182, 212, 0.08)");
+        grad.addColorStop(1, "transparent");
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 45, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Nucleus core
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#3b7eff";
+        ctx.shadowColor = "#3b7eff";
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Satellite orbiting nodes
+        for (let k = 0; k < 3; k++) {
+          const orbAngle = angleRef.current + (k * Math.PI * 2) / 3;
+          const orbDist = 18 + k * 4;
+          const ox = mouse.x + Math.cos(orbAngle) * orbDist;
+          const oy = mouse.y + Math.sin(orbAngle) * orbDist;
+
+          ctx.beginPath();
+          ctx.arc(ox, oy, 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(6, 182, 212, 0.8)";
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(mouse.x, mouse.y);
+          ctx.lineTo(ox, oy);
+          ctx.strokeStyle = "rgba(59, 126, 255, 0.25)";
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
         }
       }
     };
@@ -148,6 +202,7 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       io.disconnect();
       ro.disconnect();
@@ -166,7 +221,7 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
         height: "100%",
         pointerEvents: "none",
         zIndex: 0,
-        opacity: 0.75,
+        opacity: 0.8,
         ...style,
       }}
     />
