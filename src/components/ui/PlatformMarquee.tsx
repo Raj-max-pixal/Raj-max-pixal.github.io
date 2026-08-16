@@ -68,7 +68,7 @@ export function PlatformMarquee({ className = "", speed = 35 }: PlatformMarqueeP
                 justifyContent: "center",
               }}
             >
-              <div dangerouslySetInnerHTML={{ __html: platform.icon }} />
+              <div className="svg-icon-wrap" dangerouslySetInnerHTML={{ __html: platform.icon }} />
             </div>
             <span>{platform.name}</span>
           </div>

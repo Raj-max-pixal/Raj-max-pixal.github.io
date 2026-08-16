@@ -101,6 +101,7 @@ export function FloatingTechBadge({
       {/* Icon */}
       {iconData ? (
         <div
+          className="svg-icon-wrap"
           style={{
             width: "22px",
             height: "22px",

@@ -12,33 +12,49 @@ export function HeroVideo({ visible }: HeroVideoProps) {
   const reducedMotion = useReducedMotion();
   const [videoLoaded, setVideoLoaded] = useState(false);
 
+  const markLoaded = () => {
+    setVideoLoaded(true);
+  };
+
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     
-    // Load the video first
-    v.load();
-    
-    // Auto-play video as soon as possible
-    const playVideo = async () => {
-      try {
-        await v.play();
-        console.log("Video playing successfully");
-      } catch (err) {
-        console.log("Autoplay blocked:", err);
-      }
+    // Explicitly set DOM properties for background autoplay compatibility
+    v.muted = true;
+    v.playsInline = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+
+    // Check if video is already ready/cached
+    if (v.readyState >= 1) {
+      setVideoLoaded(true);
+    }
+
+    const tryPlay = () => {
+      v.play().then(() => {
+        setVideoLoaded(true);
+      }).catch(err => {
+        console.log("Autoplay attempt failed:", err);
+      });
     };
-    
-    // Try to play immediately, then retry after delays
-    playVideo();
-    const retry1 = setTimeout(playVideo, 300);
-    const retry2 = setTimeout(playVideo, 1000);
-    
+
+    // Initial play attempt
+    tryPlay();
+
+    // Fallback timer to make video visible even if events were missed
+    const timer = setTimeout(() => {
+      setVideoLoaded(true);
+      tryPlay();
+    }, 400);
+
     return () => {
-      clearTimeout(retry1);
-      clearTimeout(retry2);
+      clearTimeout(timer);
     };
   }, [reducedMotion]);
+
+  // Show video when component becomes visible
+  const isVideoVisible = visible && videoLoaded;
 
   return (
     <div
@@ -90,13 +106,11 @@ export function HeroVideo({ visible }: HeroVideoProps) {
         loop
         playsInline
         preload="auto"
-        onLoadedData={() => {
-          setVideoLoaded(true);
-          console.log("Video loaded");
-        }}
-        onError={(e) => {
-          console.error("Video error:", e);
-        }}
+        onLoadedData={markLoaded}
+        onCanPlay={markLoaded}
+        onPlay={markLoaded}
+        onPlaying={markLoaded}
+        onLoadedMetadata={markLoaded}
         style={{
           width: "100%",
           height: "100%",
@@ -106,10 +120,10 @@ export function HeroVideo({ visible }: HeroVideoProps) {
           position: "relative",
           zIndex: 1,
           mixBlendMode: "screen",
-          opacity: visible && videoLoaded ? 1 : 0,
-          transform: visible && videoLoaded ? "scale(1)" : "scale(0.98)",
+          opacity: isVideoVisible ? 1 : 0,
+          transform: isVideoVisible ? "scale(1)" : "scale(0.98)",
           transition: "opacity 1.4s ease, transform 1.4s var(--ease-expo)",
-          transitionDelay: "0.4s",
+          transitionDelay: "0.2s",
           willChange: "opacity, transform",
         }}
       >
@@ -132,3 +146,4 @@ export function HeroVideo({ visible }: HeroVideoProps) {
     </div>
   );
 }
+

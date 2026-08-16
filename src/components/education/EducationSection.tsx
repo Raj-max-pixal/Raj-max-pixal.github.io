@@ -113,7 +113,7 @@ export function EducationSection() {
                     <div
                       style={{ width: "18px", height: "18px" }}
                     >
-                      <div dangerouslySetInnerHTML={{ __html: edu.icon }} />
+                      <div className="svg-icon-wrap" dangerouslySetInnerHTML={{ __html: edu.icon }} />
                     </div>
                   </div>
                 </div>

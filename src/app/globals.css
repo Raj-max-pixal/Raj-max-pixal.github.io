@@ -676,6 +676,35 @@ html.lenis, html.lenis body { height: auto; }
   color: var(--text-primary);
 }
 
+/* ─── Global SVG Icon Sizing & Svg Wrapper ───────────────────── */
+.svg-icon-wrap,
+[data-icon-wrap] {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg-icon-wrap svg,
+.tech-icon-card div > svg,
+div > svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+/* Ensure Lucide and inline SVGs shrink-wrap correctly inside buttons/flex items */
+button svg,
+a svg,
+.btn-ghost svg,
+.btn-outline svg,
+.btn-primary svg {
+  flex-shrink: 0;
+}
+
 /* ─── Mobile ────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
@@ -684,3 +713,4 @@ html.lenis, html.lenis body { height: auto; }
 @media (min-width: 769px) {
   .show-mobile { display: none !important; }
 }
+

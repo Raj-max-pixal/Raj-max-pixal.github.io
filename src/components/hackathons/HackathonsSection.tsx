@@ -153,7 +153,7 @@ export function HackathonsSection() {
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}
               >
-                <div dangerouslySetInnerHTML={{ __html: PLATFORMS[0].icon }} />
+                <div className="svg-icon-wrap" dangerouslySetInnerHTML={{ __html: PLATFORMS[0].icon }} />
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
@@ -256,7 +256,7 @@ export function HackathonsSection() {
                 <div
                   style={{ width: "20px", height: "20px", flexShrink: 0 }}
                 >
-                  <div dangerouslySetInnerHTML={{ __html: platform.icon }} />
+                  <div className="svg-icon-wrap" dangerouslySetInnerHTML={{ __html: platform.icon }} />
                 </div>
                 <span
                   style={{

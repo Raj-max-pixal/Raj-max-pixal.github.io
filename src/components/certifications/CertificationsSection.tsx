@@ -158,7 +158,7 @@ export function CertificationsSection() {
                     transition: "filter 0.3s ease",
                   }}
                 >
-                  <div dangerouslySetInnerHTML={{ __html: cert.icon }} />
+                  <div className="svg-icon-wrap" dangerouslySetInnerHTML={{ __html: cert.icon }} />
                 </div>
               </div>
 
