@@ -11,6 +11,7 @@ export function HeroVideo({ visible }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const reducedMotion = useReducedMotion();
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [playFailed, setPlayFailed] = useState(false);
 
   const markLoaded = () => {
     setVideoLoaded(true);
@@ -19,42 +20,51 @@ export function HeroVideo({ visible }: HeroVideoProps) {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    
+
     // Explicitly set DOM properties for background autoplay compatibility
     v.muted = true;
+    v.defaultMuted = true;
     v.playsInline = true;
     v.setAttribute("muted", "");
     v.setAttribute("playsinline", "");
+    v.setAttribute("autoplay", "");
 
-    // Check if video is already ready/cached
+    // Check readyState
     if (v.readyState >= 1) {
       setVideoLoaded(true);
     }
 
     const tryPlay = () => {
-      v.play().then(() => {
-        setVideoLoaded(true);
-      }).catch(err => {
-        console.log("Autoplay attempt failed:", err);
-      });
+      const promise = v.play();
+      if (promise !== undefined) {
+        promise
+          .then(() => {
+            setVideoLoaded(true);
+            setPlayFailed(false);
+          })
+          .catch((err) => {
+            console.log("Autoplay policy restricted video play:", err);
+            setPlayFailed(true);
+          });
+      }
     };
 
-    // Initial play attempt
     tryPlay();
 
-    // Fallback timer to make video visible even if events were missed
+    // Fallback timer to check readyState
     const timer = setTimeout(() => {
-      setVideoLoaded(true);
-      tryPlay();
-    }, 400);
+      if (v.readyState >= 2) {
+        setVideoLoaded(true);
+        tryPlay();
+      }
+    }, 300);
 
     return () => {
       clearTimeout(timer);
     };
   }, [reducedMotion]);
 
-  // Show video when component becomes visible
-  const isVideoVisible = visible && videoLoaded;
+  const isVideoVisible = visible && videoLoaded && !playFailed;
 
   return (
     <div
@@ -130,20 +140,36 @@ export function HeroVideo({ visible }: HeroVideoProps) {
         <source src="/hero-video.mp4" type="video/mp4" />
       </video>
 
-      {/* Fallback gradient if video doesn't load */}
-      {!videoLoaded && (
+      {/* Premium Poster Fallback visual if video is loading or autoplay is blocked */}
+      {(!videoLoaded || playFailed) && (
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "radial-gradient(ellipse at center, rgba(59,126,255,0.15) 0%, transparent 70%)",
             zIndex: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "radial-gradient(ellipse at center, rgba(59,126,255,0.18) 0%, rgba(6,6,6,0.95) 75%)",
             opacity: visible ? 1 : 0,
             transition: "opacity 1s ease",
           }}
-        />
+        >
+          {/* Subtle glowing tech orb visual */}
+          <div
+            style={{
+              width: "240px",
+              height: "240px",
+              borderRadius: "50%",
+              background: "radial-gradient(circle, rgba(59,126,255,0.25) 0%, transparent 70%)",
+              boxShadow: "0 0 60px rgba(59,126,255,0.2)",
+              animation: "pulse-gentle 4s ease-in-out infinite",
+            }}
+          />
+        </div>
       )}
     </div>
   );
 }
+
 

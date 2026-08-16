@@ -11,9 +11,10 @@ interface ProjectNetworkProps {
 export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const reducedMotion = useReducedMotion();
-  const particlesRef = useRef<Array<{ x: number; y: number; vx: number; vy: number; baseX: number; baseY: number }>>([]);
+  const particlesRef = useRef<Array<{ x: number; y: number; vx: number; vy: number; baseX: number; baseY: number; radius: number }>>([]);
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const rafRef = useRef<number>(0);
+  const isVisibleRef = useRef<boolean>(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,12 +23,16 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
     if (!ctx) return;
 
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const count = reducedMotion ? 0 : (isMobile ? 50 : 100);
+    const count = reducedMotion ? 0 : (isMobile ? 35 : 70);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      initParticles(count, canvas.width, canvas.height);
+      const width = canvas.offsetWidth;
+      const height = canvas.offsetHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+      initParticles(count, width, height);
     };
 
     const initParticles = (n: number, w: number, h: number) => {
@@ -36,8 +41,9 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
         y: Math.random() * h,
         baseX: Math.random() * w,
         baseY: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: 1.5 + Math.random() * 1.5,
       }));
     };
 
@@ -55,16 +61,29 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
 
+    // Visibility observer to save power when tab/canvas is hidden
+    const onVisibilityChange = () => {
+      isVisibleRef.current = !document.hidden;
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    const io = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting && !document.hidden;
+    });
+    io.observe(canvas);
+
     const animate = () => {
       rafRef.current = requestAnimationFrame(animate);
-      const { width: w, height: h } = canvas;
-      ctx.clearRect(0, 0, w, h);
 
-      if (reducedMotion) return;
+      if (!isVisibleRef.current || reducedMotion) return;
+
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
 
       const particles = particlesRef.current;
       const mouse = mouseRef.current;
-      const connectionDistance = 140;
+      const connectionDistance = 130;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
@@ -83,24 +102,25 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
         const dx = p.baseX - mouse.x;
         const dy = p.baseY - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const interactionRadius = 200;
+        const interactionRadius = 180;
 
         let x = p.baseX;
         let y = p.baseY;
 
         if (dist < interactionRadius) {
           const force = (interactionRadius - dist) / interactionRadius;
-          x += (dx / dist) * force * 15;
-          y += (dy / dist) * force * 15;
+          x += (dx / dist) * force * 18;
+          y += (dy / dist) * force * 18;
         }
 
         p.x = x;
         p.y = y;
 
         // Draw node
+        const isNearMouse = dist < interactionRadius;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(59, 126, 255, ${0.2 + (1 - dist / Math.max(w, h)) * 0.3})`;
+        ctx.arc(p.x, p.y, isNearMouse ? p.radius * 1.5 : p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isNearMouse ? "rgba(59, 126, 255, 0.8)" : "rgba(59, 126, 255, 0.35)";
         ctx.fill();
 
         // Draw connections (spider web effect)
@@ -111,12 +131,12 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
           const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
 
           if (dist2 < connectionDistance) {
-            const opacity = (1 - dist2 / connectionDistance) * 0.12;
+            const opacity = (1 - dist2 / connectionDistance) * (isNearMouse ? 0.22 : 0.1);
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(59, 126, 255, ${opacity})`;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = isNearMouse ? 0.8 : 0.5;
             ctx.stroke();
           }
         }
@@ -128,6 +148,8 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      io.disconnect();
       ro.disconnect();
     };
   }, [reducedMotion]);
@@ -144,7 +166,7 @@ export function ProjectNetwork({ className = "", style = {} }: ProjectNetworkPro
         height: "100%",
         pointerEvents: "none",
         zIndex: 0,
-        opacity: 0.7,
+        opacity: 0.75,
         ...style,
       }}
     />

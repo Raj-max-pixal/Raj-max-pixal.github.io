@@ -168,7 +168,7 @@ export function HackathonsSection() {
                   CareerForge AI
                 </h3>
                 <p className="t-small" style={{ color: "var(--text-secondary)", lineHeight: 1.65, maxWidth: "460px" }}>
-                  AI-driven career-path recommendation engine. 85%+ accuracy in skill-to-role matching for 100+ test users. Scalable RESTful API with sub-200ms response under concurrent load.
+                  CareerForge AI — AI-driven career recommendation engine. Built during the Microsoft Hackathon for intelligent skill-to-role mapping with a scalable RESTful API endpoint.
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginTop: "1rem" }}>
                   {["Python", "LLM APIs", "FastAPI", "RESTful APIs"].map(t => (

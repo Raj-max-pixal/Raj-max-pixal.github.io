@@ -4,7 +4,7 @@ import { SmoothScrollProvider } from "@/components/ui/SmoothScrollProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rajasaranya.dev"),
+  metadataBase: new URL("https://rajasaranya.me"),
   title: "Rajasaranya.T — Software Engineer & AI Builder",
   description:
     "Portfolio of Rajasaranya.T — Software Engineer, AI Builder, and Full-Stack Developer. Building intelligent products, AI systems, and software that goes beyond the expected. Exploring CloudSecOps.",
@@ -25,10 +25,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Rajasaranya.T" }],
   creator: "Rajasaranya.T",
+  alternates: {
+    canonical: "https://rajasaranya.me",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rajasaranya.dev",
+    url: "https://rajasaranya.me",
     title: "Rajasaranya.T — Software Engineer & AI Builder",
     description:
       "Building intelligent products, immersive experiences, and software that goes beyond the expected. Exploring CloudSecOps.",
@@ -78,3 +81,4 @@ export default function RootLayout({
     </html>
   );
 }
+

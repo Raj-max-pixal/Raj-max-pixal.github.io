@@ -9,6 +9,11 @@ export interface Project {
   liveUrl: string | null;
   featured: boolean;
   accentColor: string;
+  imageBannerUrl?: string;
+  problem?: string;
+  solution?: string;
+  architecture?: string[];
+  features?: string[];
   index?: number;
 }
 
@@ -26,6 +31,11 @@ export const projects: Project[] = [
     liveUrl: null,
     featured: true,
     accentColor: "#3b7eff",
+    imageBannerUrl: "/projects/ai-content-platform.png",
+    problem: "Content creators struggle with slow manual generation workflows and fragmented toolsets across platforms.",
+    solution: "Built a centralized cloud-native AI generation platform with sub-second response times and automated deployment pipelines.",
+    architecture: ["Next.js App Router frontend", "Firebase Firestore real-time state engine", "GCP Cloud Functions API gateway", "LLM API streaming responses"],
+    features: ["Real-time AI generation", "Distributed user session management", "Automated CI/CD build deployment", "Sub-second streaming API endpoint"],
   },
   {
     id: "maxie",
@@ -40,6 +50,11 @@ export const projects: Project[] = [
     liveUrl: null,
     featured: true,
     accentColor: "#ec4899",
+    imageBannerUrl: "/projects/maxie.png",
+    problem: "Traditional desktop utilities lack interactive presence and personal assistant intelligence.",
+    solution: "Engineered a screen-aware desktop AI agent with custom prompt persona logic and lightweight system footprint.",
+    architecture: ["Python GUI event loop", "Custom System Prompt Engine", "Asynchronous LLM API Handler", "Local Memory State"],
+    features: ["Screen overlay companion", "Interactive conversation loop", "Context-aware prompt persona", "Low CPU/Memory footprint"],
   },
   {
     id: "studybuddy-ai",
@@ -54,6 +69,10 @@ export const projects: Project[] = [
     liveUrl: null,
     featured: true,
     accentColor: "#a855f7",
+    problem: "Students waste hours reading static textbooks without active recall or concept verification.",
+    solution: "Created an adaptive knowledge-graph study engine that turns text materials into interactive quizzes and concept maps.",
+    architecture: ["React Next.js UI", "Knowledge Graph Extraction Parser", "LLM Quiz Generator Engine", "Firebase Progress Database"],
+    features: ["Adaptive quiz generation", "Multi-level concept explanations", "Visual knowledge progression tracking", "Personalized study scheduling"],
   },
   {
     id: "janvoice-ai",
@@ -68,6 +87,10 @@ export const projects: Project[] = [
     liveUrl: null,
     featured: false,
     accentColor: "#22c55e",
+    problem: "High latency in traditional speech-to-text-to-speech pipelines disrupts conversational flow.",
+    solution: "Architected a full-duplex WebSocket stream connecting FastAPI with real-time speech processing and fast LLM inference.",
+    architecture: ["FastAPI WebSocket Server", "PyAudio Voice Stream Buffer", "Whisper Speech Parser", "Text-to-Speech Audio Output"],
+    features: ["Full-duplex real-time voice stream", "Sub-500ms audio turnaround", "Noise-filtered speech capture", "Natural voice output"],
   },
   {
     id: "growth-intelligence-studio",
@@ -82,6 +105,10 @@ export const projects: Project[] = [
     liveUrl: null,
     featured: false,
     accentColor: "#f59e0b",
+    problem: "Brands lack actionable intelligence on how content performance translates into actual audience growth.",
+    solution: "Designed an analytics engine combining engagement data modeling with predictive AI content recommendations.",
+    architecture: ["Next.js App Dashboard", "Node.js Analytics Engine", "Firebase Realtime Store", "Predictive Growth Model"],
+    features: ["Content performance analytics", "Predictive posting schedule AI", "Multi-platform strategy insights", "Automated engagement reports"],
   },
   {
     id: "animeverse",
@@ -96,5 +123,10 @@ export const projects: Project[] = [
     liveUrl: null,
     featured: false,
     accentColor: "#f97316",
+    problem: "Existing media discovery sites are cluttered with slow load times and intrusive ads.",
+    solution: "Shipped a clean, lightning-fast media discovery platform with instant search, rich imagery, and community lists.",
+    architecture: ["Next.js React Frontend", "Jikan Media API Connector", "Firebase Authentication & Saved Lists", "Tailwind Responsive UI"],
+    features: ["Instant title search & filtering", "Curated community watchlists", "High-contrast dark UI theme", "Optimized image lazy-loading"],
   },
 ];
+

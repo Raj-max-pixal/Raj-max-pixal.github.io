@@ -17,7 +17,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   useEffect(() => {
     if (project) {
       document.body.style.overflow = "hidden";
-      // Focus close button for accessibility
       setTimeout(() => closeBtnRef.current?.focus(), 100);
     } else {
       document.body.style.overflow = "";
@@ -50,6 +49,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         >
           <motion.div
             className="project-modal-inner"
+            layoutId={`project-card-${project.id}`}
             initial={{ scale: 0.94, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.96, y: 10, opacity: 0 }}
@@ -74,6 +74,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 color: "var(--text-secondary)",
                 transition: "all 0.2s ease",
                 cursor: "pointer",
+                zIndex: 10,
               }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLElement).style.color = "var(--text-primary)";
@@ -88,79 +89,128 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </button>
 
             {/* Header */}
-            <div style={{ marginBottom: "2rem", paddingRight: "2.5rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-                {/* Project icon */}
-                <div style={{
-                  width: "44px", height: "44px",
-                  borderRadius: "12px",
-                  background: `${project.accentColor}18`,
-                  border: `1px solid ${project.accentColor}30`,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  flexShrink: 0,
-                }}>
-                  <span style={{ fontSize: "1.2rem", fontWeight: 800, color: project.accentColor, letterSpacing: "-0.04em" }}>
-                    {project.name.charAt(0)}
-                  </span>
-                </div>
-
-                <div>
-                  <span style={{
-                    display: "block",
-                    padding: "0.15rem 0.6rem",
-                    background: `${project.accentColor}14`,
-                    border: `1px solid ${project.accentColor}28`,
-                    borderRadius: "var(--r-full)",
-                    fontSize: "0.65rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.1em",
-                    color: project.accentColor,
-                    textTransform: "uppercase" as const,
-                    marginBottom: "0.25rem",
-                  }}>
-                    {project.category}
-                  </span>
-                </div>
-              </div>
+            <div style={{ marginBottom: "1.5rem", paddingRight: "2.5rem" }}>
+              <span style={{
+                display: "inline-block",
+                padding: "0.2rem 0.75rem",
+                background: `${project.accentColor}18`,
+                border: `1px solid ${project.accentColor}35`,
+                borderRadius: "var(--r-full)",
+                fontSize: "0.68rem",
+                fontWeight: 700,
+                letterSpacing: "0.12em",
+                color: project.accentColor,
+                textTransform: "uppercase",
+                marginBottom: "0.75rem",
+              }}>
+                {project.category}
+              </span>
 
               <h2
                 style={{
-                  fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
-                  fontWeight: 700,
+                  fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
+                  fontWeight: 800,
                   letterSpacing: "-0.03em",
                   color: "var(--text-primary)",
                   lineHeight: 1.1,
-                  marginBottom: "1.25rem",
+                  marginBottom: "0.75rem",
                 }}
               >
                 {project.name}
               </h2>
 
-              {/* Accent line */}
-              <div style={{
-                width: "48px", height: "2px",
-                background: project.accentColor,
-                borderRadius: "2px",
-                marginBottom: "1.5rem",
-                opacity: 0.8,
-              }} />
+              <p
+                className="t-body-lg"
+                style={{
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.65,
+                }}
+              >
+                {project.longDescription}
+              </p>
             </div>
 
-            {/* Description */}
-            <p
-              className="t-body-lg"
-              style={{
-                color: "var(--text-secondary)",
-                marginBottom: "2rem",
-                lineHeight: 1.75,
-              }}
-            >
-              {project.longDescription}
-            </p>
+            {/* Technical Problem & Solution callouts */}
+            {(project.problem || project.solution) && (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "1rem",
+                  marginBottom: "1.75rem",
+                }}
+              >
+                {project.problem && (
+                  <div
+                    style={{
+                      padding: "1rem 1.25rem",
+                      background: "rgba(255,255,255,0.02)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "var(--r-lg)",
+                    }}
+                  >
+                    <p style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", color: "var(--text-tertiary)", textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                      The Problem
+                    </p>
+                    <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
+                      {project.problem}
+                    </p>
+                  </div>
+                )}
 
-            {/* Tech stack */}
-            <div style={{ marginBottom: "2.5rem" }}>
-              <p className="t-label" style={{ color: "var(--text-tertiary)", marginBottom: "0.85rem" }}>
+                {project.solution && (
+                  <div
+                    style={{
+                      padding: "1rem 1.25rem",
+                      background: `${project.accentColor}0a`,
+                      border: `1px solid ${project.accentColor}25`,
+                      borderRadius: "var(--r-lg)",
+                    }}
+                  >
+                    <p style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.1em", color: project.accentColor, textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                      The Solution
+                    </p>
+                    <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
+                      {project.solution}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Architecture Highlights */}
+            {project.architecture && (
+              <div style={{ marginBottom: "1.75rem" }}>
+                <p className="t-label" style={{ color: "var(--text-tertiary)", marginBottom: "0.75rem" }}>
+                  Architecture Highlights
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
+                  {project.architecture.map((arch, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                        padding: "0.45rem 0.85rem",
+                        background: "var(--bg-elevated)",
+                        borderRadius: "var(--r-md)",
+                        border: "1px solid var(--border-subtle)",
+                        fontSize: "0.78rem",
+                        color: "var(--text-secondary)",
+                      }}
+                    >
+                      <span style={{ color: project.accentColor, fontSize: "0.7rem" }}>◆</span>
+                      <span>{arch}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Tech Stack */}
+            <div style={{ marginBottom: "2rem" }}>
+              <p className="t-label" style={{ color: "var(--text-tertiary)", marginBottom: "0.75rem" }}>
                 Tech Stack
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
@@ -195,7 +245,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   style={{ fontSize: "0.8rem", padding: "0.6rem 1.5rem" }}
                 >
                   <Github size={13} />
-                  View on GitHub
+                  View Repository on GitHub
                 </a>
               )}
               {project.liveUrl && (
@@ -225,7 +275,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 position: "absolute",
                 top: 0, right: 0,
                 width: "300px", height: "200px",
-                background: `radial-gradient(ellipse at top right, ${project.accentColor}08 0%, transparent 70%)`,
+                background: `radial-gradient(ellipse at top right, ${project.accentColor}10 0%, transparent 70%)`,
                 pointerEvents: "none",
                 borderRadius: "var(--r-xl)",
               }}
@@ -236,3 +286,4 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     </AnimatePresence>
   );
 }
+

@@ -2,33 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-
-const STATS = [
-  {
-    value: 30,
-    suffix: "+",
-    label: "Repositories",
-    sublabel: "& Real-world Projects",
-  },
-  {
-    value: 10,
-    suffix: "+",
-    label: "Hackathons",
-    sublabel: "Competed & Built",
-  },
-  {
-    value: 20,
-    suffix: "+",
-    label: "Technologies",
-    sublabel: "Explored & Used",
-  },
-  {
-    value: 5,
-    suffix: "+",
-    label: "Certifications",
-    sublabel: "Professional Credentials",
-  },
-];
+import { PORTFOLIO_STATS } from "@/data/stats";
 
 function useCountUp(target: number, inView: boolean, reducedMotion: boolean, duration = 1800) {
   const [count, setCount] = useState(reducedMotion ? target : 0);
@@ -120,10 +94,19 @@ export function StatsSection() {
           io.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.08, rootMargin: "0px 0px -50px 0px" }
     );
     io.observe(el);
-    return () => io.disconnect();
+
+    // Fallback timer to guarantee count-up starts even if intersection observer missed
+    const fallbackTimer = setTimeout(() => {
+      setInView(true);
+    }, 600);
+
+    return () => {
+      io.disconnect();
+      clearTimeout(fallbackTimer);
+    };
   }, []);
 
   return (
@@ -163,11 +146,11 @@ export function StatsSection() {
         }}
         className="stats-grid"
       >
-        {STATS.map((stat, i) => (
+        {PORTFOLIO_STATS.map((stat, i) => (
           <div
             key={stat.label}
             style={{
-              borderRight: i < STATS.length - 1 ? "1px solid var(--border)" : "none",
+              borderRight: i < PORTFOLIO_STATS.length - 1 ? "1px solid var(--border)" : "none",
               opacity: inView ? 1 : 0,
               transform: inView ? "none" : "translateY(30px) scale(0.95)",
               filter: inView ? "blur(0px)" : "blur(6px)",
@@ -202,3 +185,4 @@ export function StatsSection() {
     </section>
   );
 }
+
