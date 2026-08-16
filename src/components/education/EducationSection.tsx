@@ -132,8 +132,8 @@ export function EducationSection() {
                     overflow: "hidden",
                   }}
                 >
-                  {/* Neural web network canvas inside school and college box */}
-                  <ProjectNetwork style={{ opacity: 0.6 }} />
+                  {/* Neural web network canvas inside school and college box (subtle overlay) */}
+                  <ProjectNetwork style={{ opacity: 0.22 }} />
                   {/* Header row */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem", flexWrap: "wrap", gap: "0.5rem" }}>
                     <span

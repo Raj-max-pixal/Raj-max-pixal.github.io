@@ -34,6 +34,22 @@ export function HeroVideo({ visible }: HeroVideoProps) {
     // Initial attempt
     playVideo();
 
+    // Re-play immediately on ended or pause event to guarantee continuous playback until the last frame
+    const handleEndedOrPause = () => {
+      v.currentTime = 0;
+      playVideo();
+    };
+
+    v.addEventListener("ended", handleEndedOrPause);
+    v.addEventListener("pause", handleEndedOrPause);
+
+    // Continuous health check interval to keep video playing seamlessly
+    const intervalTimer = setInterval(() => {
+      if (v.paused) {
+        playVideo();
+      }
+    }, 1000);
+
     // Fallback: trigger play on first user gesture or scroll if browser defers initial load
     const userEvents = ["click", "touchstart", "scroll", "mousemove", "pointerdown"];
     const handleGesture = () => {
@@ -50,6 +66,9 @@ export function HeroVideo({ visible }: HeroVideoProps) {
 
     return () => {
       clearTimeout(timer);
+      clearInterval(intervalTimer);
+      v.removeEventListener("ended", handleEndedOrPause);
+      v.removeEventListener("pause", handleEndedOrPause);
       userEvents.forEach(evt => {
         window.removeEventListener(evt, handleGesture);
       });

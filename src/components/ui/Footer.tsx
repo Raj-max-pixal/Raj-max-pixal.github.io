@@ -109,9 +109,6 @@ export function Footer() {
 
         {/* Right side */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.2rem" }}>
-          <span className="t-small" style={{ color: "var(--text-muted)" }}>
-            Built with Next.js · TypeScript · GSAP · Framer Motion
-          </span>
           <span className="t-small" style={{ color: "var(--text-tertiary)" }}>
             © 2026 Rajasaranya.T · Chennai, India
           </span>
