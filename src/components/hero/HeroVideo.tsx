@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface HeroVideoProps {
@@ -10,18 +10,12 @@ interface HeroVideoProps {
 export function HeroVideo({ visible }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const reducedMotion = useReducedMotion();
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [playFailed, setPlayFailed] = useState(false);
-
-  const markLoaded = () => {
-    setVideoLoaded(true);
-  };
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
 
-    // Explicitly set DOM properties for background autoplay compatibility
+    // Enforce DOM muted & playsInline attributes for modern browser background autoplay
     v.muted = true;
     v.defaultMuted = true;
     v.playsInline = true;
@@ -29,42 +23,41 @@ export function HeroVideo({ visible }: HeroVideoProps) {
     v.setAttribute("playsinline", "");
     v.setAttribute("autoplay", "");
 
-    // Check readyState
-    if (v.readyState >= 1) {
-      setVideoLoaded(true);
-    }
-
-    const tryPlay = () => {
-      const promise = v.play();
-      if (promise !== undefined) {
-        promise
-          .then(() => {
-            setVideoLoaded(true);
-            setPlayFailed(false);
-          })
-          .catch((err) => {
-            console.log("Autoplay policy restricted video play:", err);
-            setPlayFailed(true);
-          });
+    const playVideo = () => {
+      if (v.paused) {
+        v.play().catch((err) => {
+          console.log("Autoplay pending user interaction:", err);
+        });
       }
     };
 
-    tryPlay();
+    // Initial attempt
+    playVideo();
 
-    // Fallback timer to check readyState
+    // Fallback: trigger play on first user gesture or scroll if browser defers initial load
+    const userEvents = ["click", "touchstart", "scroll", "mousemove", "pointerdown"];
+    const handleGesture = () => {
+      playVideo();
+    };
+
+    userEvents.forEach(evt => {
+      window.addEventListener(evt, handleGesture, { passive: true });
+    });
+
     const timer = setTimeout(() => {
-      if (v.readyState >= 2) {
-        setVideoLoaded(true);
-        tryPlay();
-      }
-    }, 300);
+      playVideo();
+    }, 200);
 
     return () => {
       clearTimeout(timer);
+      userEvents.forEach(evt => {
+        window.removeEventListener(evt, handleGesture);
+      });
     };
   }, [reducedMotion]);
 
-  const isVideoVisible = visible && videoLoaded && !playFailed;
+  // Make video visible as soon as component is visible
+  const isVideoVisible = visible;
 
   return (
     <div
@@ -116,11 +109,6 @@ export function HeroVideo({ visible }: HeroVideoProps) {
         loop
         playsInline
         preload="auto"
-        onLoadedData={markLoaded}
-        onCanPlay={markLoaded}
-        onPlay={markLoaded}
-        onPlaying={markLoaded}
-        onLoadedMetadata={markLoaded}
         style={{
           width: "100%",
           height: "100%",
@@ -132,44 +120,28 @@ export function HeroVideo({ visible }: HeroVideoProps) {
           mixBlendMode: "screen",
           opacity: isVideoVisible ? 1 : 0,
           transform: isVideoVisible ? "scale(1)" : "scale(0.98)",
-          transition: "opacity 1.4s ease, transform 1.4s var(--ease-expo)",
-          transitionDelay: "0.2s",
+          transition: "opacity 1.2s ease, transform 1.2s var(--ease-expo)",
           willChange: "opacity, transform",
         }}
       >
         <source src="/hero-video.mp4" type="video/mp4" />
       </video>
 
-      {/* Premium Poster Fallback visual if video is loading or autoplay is blocked */}
-      {(!videoLoaded || playFailed) && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "radial-gradient(ellipse at center, rgba(59,126,255,0.18) 0%, rgba(6,6,6,0.95) 75%)",
-            opacity: visible ? 1 : 0,
-            transition: "opacity 1s ease",
-          }}
-        >
-          {/* Subtle glowing tech orb visual */}
-          <div
-            style={{
-              width: "240px",
-              height: "240px",
-              borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(59,126,255,0.25) 0%, transparent 70%)",
-              boxShadow: "0 0 60px rgba(59,126,255,0.2)",
-              animation: "pulse-gentle 4s ease-in-out infinite",
-            }}
-          />
-        </div>
-      )}
+      {/* Ambient background glow behind video */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          background: "radial-gradient(ellipse at center, rgba(59,126,255,0.14) 0%, transparent 70%)",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 1s ease",
+        }}
+      />
     </div>
   );
 }
+
+
 
 
