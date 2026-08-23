@@ -14,7 +14,6 @@ export interface Project {
   solution?: string;
   architecture?: string[];
   features?: string[];
-  metrics?: string[];
   index?: number;
 }
 
@@ -37,7 +36,6 @@ export const projects: Project[] = [
     solution: "Built a centralized cloud-native AI generation platform with sub-second response times and automated deployment pipelines.",
     architecture: ["Next.js App Router frontend", "Firebase Firestore real-time state engine", "GCP Cloud Functions API gateway", "LLM API streaming responses"],
     features: ["Real-time AI generation", "Distributed user session management", "Automated CI/CD build deployment", "Sub-second streaming API endpoint"],
-    metrics: ["10k+ Monthly Generations", "Sub-second API Latency"],
   },
   {
     id: "maxie",
@@ -57,7 +55,6 @@ export const projects: Project[] = [
     solution: "Engineered a screen-aware desktop AI agent with custom prompt persona logic and lightweight system footprint.",
     architecture: ["Python GUI event loop", "Custom System Prompt Engine", "Asynchronous LLM API Handler", "Local Memory State"],
     features: ["Screen overlay companion", "Interactive conversation loop", "Context-aware prompt persona", "Low CPU/Memory footprint"],
-    metrics: ["1,500+ Downloads", "<50MB RAM Usage"],
   },
   {
     id: "studybuddy-ai",
@@ -76,7 +73,6 @@ export const projects: Project[] = [
     solution: "Created an adaptive knowledge-graph study engine that turns text materials into interactive quizzes and concept maps.",
     architecture: ["React Next.js UI", "Knowledge Graph Extraction Parser", "LLM Quiz Generator Engine", "Firebase Progress Database"],
     features: ["Adaptive quiz generation", "Multi-level concept explanations", "Visual knowledge progression tracking", "Personalized study scheduling"],
-    metrics: ["98% Accuracy in Quiz Gen", "5,000+ Active Students"],
   },
   {
     id: "janvoice-ai",
@@ -95,7 +91,6 @@ export const projects: Project[] = [
     solution: "Architected a full-duplex WebSocket stream connecting FastAPI with real-time speech processing and fast LLM inference.",
     architecture: ["FastAPI WebSocket Server", "PyAudio Voice Stream Buffer", "Whisper Speech Parser", "Text-to-Speech Audio Output"],
     features: ["Full-duplex real-time voice stream", "Sub-500ms audio turnaround", "Noise-filtered speech capture", "Natural voice output"],
-    metrics: ["Sub-500ms Audio Latency", "99% Speech Recognition Rate"],
   },
   {
     id: "growth-intelligence-studio",
@@ -114,7 +109,6 @@ export const projects: Project[] = [
     solution: "Designed an analytics engine combining engagement data modeling with predictive AI content recommendations.",
     architecture: ["Next.js App Dashboard", "Node.js Analytics Engine", "Firebase Realtime Store", "Predictive Growth Model"],
     features: ["Content performance analytics", "Predictive posting schedule AI", "Multi-platform strategy insights", "Automated engagement reports"],
-    metrics: ["Analyzed 2M+ Posts", "40% Engagement Lift"],
   },
   {
     id: "animeverse",
@@ -133,7 +127,5 @@ export const projects: Project[] = [
     solution: "Shipped a clean, lightning-fast media discovery platform with instant search, rich imagery, and community lists.",
     architecture: ["Next.js React Frontend", "Jikan Media API Connector", "Firebase Authentication & Saved Lists", "Tailwind Responsive UI"],
     features: ["Instant title search & filtering", "Curated community watchlists", "High-contrast dark UI theme", "Optimized image lazy-loading"],
-    metrics: ["100/100 Lighthouse Score", "500ms Page Load Time"],
   },
 ];
-
