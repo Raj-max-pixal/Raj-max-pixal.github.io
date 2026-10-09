@@ -104,23 +104,39 @@ export function ProjectPreview({ project, hovered, onClick }: ProjectPreviewProp
             </svg>
           )}
 
-          {project.id === "growth-intelligence-studio" && (
+          {project.id === "multimax-ai-hub" && (
+            <svg viewBox="0 0 400 250" style={{ width: "100%", height: "100%", opacity: 0.75 }}>
+              <circle cx="200" cy="125" r="34" fill={project.accentColor} opacity="0.2" stroke={project.accentColor} strokeWidth="1.5" />
+              <circle cx="200" cy="125" r="16" fill={project.accentColor} opacity="0.6" />
+              <circle cx="105" cy="70" r="14" fill="#8b5cf6" opacity="0.4" stroke="#8b5cf6" strokeWidth="1" />
+              <circle cx="295" cy="70" r="14" fill="#06b6d4" opacity="0.4" stroke="#06b6d4" strokeWidth="1" />
+              <circle cx="105" cy="180" r="14" fill="#10b981" opacity="0.4" stroke="#10b981" strokeWidth="1" />
+              <circle cx="295" cy="180" r="14" fill="#f59e0b" opacity="0.4" stroke="#f59e0b" strokeWidth="1" />
+              <line x1="118" y1="78" x2="185" y2="115" stroke={project.accentColor} strokeWidth="1.5" opacity="0.4" />
+              <line x1="282" y1="78" x2="215" y2="115" stroke={project.accentColor} strokeWidth="1.5" opacity="0.4" />
+              <line x1="118" y1="172" x2="185" y2="135" stroke={project.accentColor} strokeWidth="1.5" opacity="0.4" />
+              <line x1="282" y1="172" x2="215" y2="135" stroke={project.accentColor} strokeWidth="1.5" opacity="0.4" />
+              <text x="200" y="129" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">HUB</text>
+            </svg>
+          )}
+
+          {project.id === "rebound" && (
             <svg viewBox="0 0 400 250" style={{ width: "100%", height: "100%", opacity: 0.75 }}>
               <path
-                d="M 50 180 Q 150 160 220 100 T 350 50"
+                d="M 50 190 Q 140 180 200 120 T 350 45"
                 fill="none"
                 stroke={project.accentColor}
                 strokeWidth="3"
               />
-              <circle cx="220" cy="100" r="6" fill={project.accentColor} />
-              <circle cx="350" cy="50" r="7" fill={project.accentColor} />
+              <circle cx="200" cy="120" r="6" fill={project.accentColor} />
+              <circle cx="350" cy="45" r="8" fill={project.accentColor} />
               <path
-                d="M 50 180 Q 150 160 220 100 T 350 50 L 350 220 L 50 220 Z"
-                fill={`url(#growthGradient-${project.id})`}
+                d="M 50 190 Q 140 180 200 120 T 350 45 L 350 220 L 50 220 Z"
+                fill={`url(#reboundGradient-${project.id})`}
                 opacity="0.25"
               />
               <defs>
-                <linearGradient id={`growthGradient-${project.id}`} x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id={`reboundGradient-${project.id}`} x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor={project.accentColor} />
                   <stop offset="100%" stopColor="transparent" />
                 </linearGradient>
