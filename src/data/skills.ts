@@ -18,9 +18,9 @@ export const skillCategories: SkillCategory[] = [
       { name: "React", icon: "react", relatedProjects: ["multimax-ai-hub", "animeverse"] },
       { name: "Next.js", icon: "nextjs", relatedProjects: ["multimax-ai-hub", "animeverse"] },
       { name: "TypeScript", icon: "typescript", relatedProjects: ["multimax-ai-hub", "animeverse"] },
-      { name: "JavaScript", icon: "javascript", relatedProjects: ["rebound"] },
-      { name: "HTML", icon: "html", relatedProjects: ["rebound"] },
-      { name: "CSS", icon: "css", relatedProjects: ["rebound"] },
+      { name: "JavaScript", icon: "javascript", relatedProjects: ["rebound", "healthmate"] },
+      { name: "HTML", icon: "html", relatedProjects: ["rebound", "healthmate"] },
+      { name: "CSS", icon: "css", relatedProjects: ["rebound", "healthmate"] },
       { name: "Tailwind CSS", icon: "tailwind", relatedProjects: ["multimax-ai-hub"] },
       { name: "Framer Motion", icon: "framer" },
     ],
@@ -31,7 +31,7 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Python", icon: "python", relatedProjects: ["multimax-ai-hub", "maxie", "janvoice-ai"] },
       { name: "FastAPI", icon: "fastapi", relatedProjects: ["multimax-ai-hub", "janvoice-ai"] },
-      { name: "Node.js", icon: "nodejs", relatedProjects: ["rebound"] },
+      { name: "Node.js", icon: "nodejs", relatedProjects: ["rebound", "healthmate"] },
       { name: "Express.js", icon: "express" },
       { name: "Java", icon: "java" },
       { name: "RESTful APIs", icon: "api", relatedProjects: ["multimax-ai-hub"] },
@@ -55,7 +55,7 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Flutter", icon: "flutter" },
       { name: "Dart", icon: "dart" },
-      { name: "Android", icon: "android", relatedProjects: ["rebound"] },
+      { name: "Android", icon: "android", relatedProjects: ["rebound", "healthmate"] },
     ],
   },
   {
@@ -67,7 +67,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Google Cloud", icon: "gcp" },
       { name: "Docker", icon: "docker", relatedProjects: ["multimax-ai-hub"] },
       { name: "CI/CD", icon: "cicd", relatedProjects: ["multimax-ai-hub"] },
-      { name: "Vercel", icon: "vercel", relatedProjects: ["multimax-ai-hub", "rebound"] },
+      { name: "Vercel", icon: "vercel", relatedProjects: ["multimax-ai-hub", "rebound", "healthmate"] },
     ],
   },
   {
@@ -113,7 +113,7 @@ export const skillCategories: SkillCategory[] = [
     label: "Languages",
     skills: [
       { name: "Python", icon: "python", relatedProjects: ["multimax-ai-hub", "maxie"] },
-      { name: "JavaScript", icon: "javascript", relatedProjects: ["rebound"] },
+      { name: "JavaScript", icon: "javascript", relatedProjects: ["rebound", "healthmate"] },
       { name: "TypeScript", icon: "typescript", relatedProjects: ["multimax-ai-hub"] },
       { name: "Java", icon: "java" },
       { name: "Go", icon: "go" },

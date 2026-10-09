@@ -33,7 +33,7 @@ export function ProjectsSection() {
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", marginBottom: "3rem" }}>
             <h2 className="t-display reveal" style={{ transitionDelay: "0.08s" }}>Projects</h2>
             <p className="t-body reveal" style={{ color: "var(--text-secondary)", maxWidth: "300px", transitionDelay: "0.16s" }}>
-              Six real products — each solving a real problem with engineering and AI.
+              Seven real products — each solving a real problem with engineering and AI.
             </p>
           </div>
         </div>

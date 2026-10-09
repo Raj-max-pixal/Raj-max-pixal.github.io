@@ -144,7 +144,23 @@ export function ProjectPreview({ project, hovered, onClick }: ProjectPreviewProp
             </svg>
           )}
 
-          {project.id === "animeverse" && (
+                    {project.id === "healthmate" && (
+            <svg viewBox="0 0 400 250" style={{ width: "100%", height: "100%", opacity: 0.8 }}>
+              <path
+                d="M 50 125 L 130 125 L 145 90 L 160 160 L 175 70 L 190 180 L 205 105 L 220 135 L 235 125 L 350 125"
+                fill="none"
+                stroke={project.accentColor}
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="190" cy="180" r="5" fill={project.accentColor} />
+              <circle cx="175" cy="70" r="5" fill={project.accentColor} />
+              <circle cx="200" cy="125" r="40" fill={project.accentColor} opacity="0.1" />
+            </svg>
+          )}
+
+{project.id === "animeverse" && (
             <svg viewBox="0 0 400 250" style={{ width: "100%", height: "100%", opacity: 0.65 }}>
               <rect x="60" y="50" width="80" height="110" rx="8" fill={project.accentColor} opacity="0.2" stroke={project.accentColor} strokeWidth="1" />
               <rect x="160" y="40" width="80" height="110" rx="8" fill={project.accentColor} opacity="0.35" stroke={project.accentColor} strokeWidth="1" />

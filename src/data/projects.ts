@@ -111,7 +111,26 @@ export const projects: Project[] = [
     architecture: ["Vanilla JS & HTML5/CSS3 offline-first core", "Web Audio API procedural sound engine", "Capacitor & Electron cross-platform packaging", "SQLite local cache with optional Supabase cloud sync"],
     features: ["Comeback Calculator for smart workload redistribution", "Procedural ambient soundscapes (Binaural, Rain, Lo-Fi)", "Interactive Study Buddy companion with animations", "Pomodoro micro-burst timer with streak tracking"],
   },
-  {
+    {
+    id: "healthmate",
+    name: "HealthMate",
+    category: "Smart Healthcare / Telehealth",
+    description:
+      "Patient-centric digital health portal combining symptom pre-screening, doctor appointment scheduling, mental wellness tools, and gamified health goals.",
+    longDescription:
+      "HealthMate is an intuitive healthcare management platform engineered during a rapid 6-hour hackathon to make health tracking, clinical triaging, and medical care accessible. It streamlines symptom assessment, simplifies doctor appointment management, provides guided mental health resources, and encourages preventive habits through milestone rewards.",
+    techStack: ["JavaScript", "HTML5", "CSS3", "Responsive UI", "Vercel"],
+    githubUrl: "https://github.com/Raj-max-pixal/Healthmate",
+    liveUrl: "https://healthmate-five.vercel.app/",
+    featured: true,
+    accentColor: "#06b6d4",
+    imageBannerUrl: "/projects/healthmate.png",
+    problem: "Healthcare services are fragmented, appointment booking is often friction-heavy, and individuals lack a centralized, accessible way to triage symptoms and monitor daily wellness.",
+    solution: "Engineered a rapid-access healthcare web application uniting intelligent symptom screening, doctor consultation booking, mindfulness resources, and personal wellness rewards into a unified interface.",
+    architecture: ["Responsive vanilla JavaScript and semantic HTML5 core", "State-driven appointment and triage flow engine", "Local persistence and session-based health metric tracking", "Edge-optimized Vercel deployment for zero-latency access"],
+    features: ["Interactive symptom pre-screening & guidance", "Doctor consultation booking & management", "Mental wellness & mindfulness practice hub", "Gamified health habit tracking & milestone badges"],
+  },
+{
     id: "animeverse",
     name: "AnimeVerse",
     category: "Web Development",
